@@ -11,8 +11,10 @@ Quero que quem leia este projeto enxergue além do concreto ou da terra batida. 
 O campo resiste com sua sabedoria popular, com a terra molhada e a colheita que sustenta. A cidade resiste com os gritos nos becos, com as crianças que sonham alto mesmo em lajes apertadas. Ambas florescem em meio às dificuldades, sustentadas por quem tem a capacidade de continuar.
 
 Este portfólio é um grito, um poema, uma carta de amor e de luta ao Brasil real. É sobre campo e cidade, mas é, sobretudo, sobre gente. Gente que resiste. Gente que floresce.
-Capítulo 2 – Desigualdade: Onde a Coragem Mora
-A desigualdade não tem um endereço fixo.
+
+     {DESIGUALDADE:CAMPO-E-CIDADE}
+     
+ desigualdade não tem um endereço fixo.
 Ela nasce onde a oportunidade não chega,
 onde quem acorda cedo e luta todo santo dia,
 recebe no fim do mês o mínimo —

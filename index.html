@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capacidade: Resistir e Florescer - Campo e Cidade</title>
+
+  <!-- Chart.js para gráfico -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet para mapa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f0fa;
+      color: #3a1a5a;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background: #7a3fbf;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      width: 100%;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 0 15px rgba(122,63,191,0.6);
+      margin-bottom: 40px;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px #b188ff;
+    }
+    header p {
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    main {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    section {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(122,63,191,0.3);
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      color: #7a3fbf;
+      margin-bottom: 15px;
+      text-align: center;
+      text-shadow: 1px 1px 3px #b188ff;
+    }
+
+    p.introducao {
+      font-size: 1.1em;
+      text-align: justify;
+      line-height: 1.8;
+      margin-bottom: 15px;
+      color: #4a2c7a;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: #9b59b6;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    nav button:hover {
+      background: #6e2a8a;
+    }
+
+    /* Imagens com legenda */
+    .imagem-explicacao {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .imagem-explicacao figure {
+      width: 280px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #b188ff66;
+      background: #faf8ff;
+      padding: 15px;
+    }
+
+    .imagem-explicacao img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .imagem-explicacao figcaption {
+      font-size: 0.9em;
+      color: #4b2d7f;
+    }
+
+    /* Gráfico */
+    #grafico-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Tabela de dados */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+    th, td {
+      padding: 12px 8px;
+      border: 1px solid #a480d3;
+    }
+    th {
+      background-color: #9b59b6;
+      color: white;
+    }
+    tbody tr:nth-child(odd) {
+      background: #f2e9ff;
+    }
+
+    /* Mapa */
+    #mapa {
+      height: 400px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(122,63,191,0.5);
+    }
+
+    /* Botões para alternar seções */
+    .botao-toggle {
+      display: block;
+      margin: 15px auto 30px;
+      background: #7a3fbf;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .botao-toggle:hover {
+      background: #5b2e7d;
+    }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      .imagem-explicacao figure {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Capacidade: Resistir e Florescer</h1>
+    <p>Projeto Agrinho - Campo e Cidade</p>
+    <p>Colégio Estadual Professora Edith | Sara Souza</p>
+  </header>
+
+  <main>
+
+    <section id="introducao">
+      <h2>Introdução</h2>
+      <p class="introducao">
+        O Brasil é um país de contrastes profundos, especialmente quando olhamos para as realidades do campo e da cidade. Enquanto a vida urbana traz mais oportunidades de educação, saúde e tecnologia, o campo ainda enfrenta desafios históricos, como o acesso limitado a serviços básicos, infraestrutura precária e a luta constante pela valorização do trabalho rural. Este projeto, intitulado <em>"Capacidade: Resistir e Florescer"</em>, busca apresentar essas diferenças, revelando tanto as dificuldades quanto a força das pessoas que vivem em cada um desses espaços. Através de imagens, gráficos e mapas interativos, vamos explorar as desigualdades e as potencialidades, reforçando a importância da capacidade humana de resistir, transformar e florescer, independentemente do lugar onde se esteja.
+      </p>
+    </section>
+
+    <nav>
+      <button onclick="mostrarSecao('imagens')">Imagens e Explicações</button>
+      <button onclick="mostrarSecao('grafico')">Gráfico e Dados</button>
+      <button onclick="mostrarSecao('mapa')">Mapa Interativo</button>
+    </nav>
+
+    <!-- Seção Imagens e explicações -->
+    <section id="imagens" style="display:block;">
+      <h2>Imagens do Campo e da Cidade com Explicações</h2>
+      <div class="imagem-explicacao">
+
+        <figure>
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Paisagem de campo com plantações" />
+          <figcaption><strong>Campo:</strong> Esta foto mostra a vastidão do campo com plantações verdes, simbolizando o trabalho duro dos agricultores que sustentam a vida com o cultivo da terra. É um espaço onde o contato com a natureza é constante, mas também onde há desafios como acesso precário à internet e serviços básicos.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=400&q=80" alt="Vista urbana de uma cidade grande" />
+          <figcaption><strong>Cidade:</strong> A imagem retrata uma cidade grande com prédios altos e ruas movimentadas, onde há mais acesso a serviços, educação e tecnologia. Porém, a desigualdade também é visível em áreas periféricas que enfrentam desafios como moradia e transporte público insuficientes.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://images.unsplash.com/photo-1542224566-8886d1940d30?auto=format&fit=crop&w=400&q=80" alt="Transporte rural, caminhonete na estrada" />
+          <figcaption><strong>Transporte no Campo:</strong> Muitas pessoas dependem de veículos como caminhonetes para se locomover em estradas não pavimentadas, o que dificulta o acesso à cidade e a serviços essenciais, refletindo a distância e a desigualdade de infraestrutura.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Ponto de ônibus na cidade" />
+          <figcaption><strong>Transporte na Cidade:</strong> Apesar de haver transporte público regular nas cidades, ele pode ser insuficiente e superlotado, tornando o deslocamento um desafio diário, principalmente para quem mora em bairros distantes e precisa trabalhar ou estudar.</figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- Seção gráfico e tabela -->
+    <section id="grafico" style="display:none;">
+      <h2>Gráfico de Colunas: Acesso a Serviços no Campo e na Cidade (Dados IBGE 2023)</h2>
+
+      <div id="grafico-container">
+        <canvas id="graficoColunas"></canvas>
+      </div>
+
+      <button class="botao-toggle" onclick="toggleTabela()">Mostrar/Ocultar Tabela de Dados</button>
+
+      <table id="tabelaDados" style="display:none;">
+        <thead>
+          <tr>
+            <th>Categoria</th>
+            <th>Campo (%)</th>
+            <th>Cidade (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Acesso à internet</td><td>60</td><td>93</td></tr>
+          <tr><td>Escola com ensino médio completo</td><td>45</td><td>80</td></tr>
+          <tr><td>Transporte público disponível</td><td>35</td><td>85</td></tr>
+          <tr><td>Abastecimento de água tratada</td><td>70</td><td>95</td></tr>
+          <tr><td>Rede de esgoto</td><td>40</td><td>90</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>Explicação do gráfico:</strong> Este gráfico mostra a diferença no acesso a serviços básicos entre o campo e a cidade, segundo dados oficiais do IBGE de 2023. Podemos perceber que a cidade possui maior percentual de acesso a internet, escolas completas, transporte público e saneamento, enquanto o campo ainda enfrenta desafios significativos, o que impacta diretamente na qualidade de vida e nas oportunidades de seus moradores.</p>
+    </section>
+
+    <!-- Seção mapa -->
+    <section id="mapa" style="display:none;">
+      <h2>Mapa Interativo das Regiões Rurais e Urbanas do Brasil</h2>
+      <div id="mapa"></div>
+      <p><strong>Explicação do mapa:</strong> Este mapa destaca as áreas rurais (campo) em verde e as áreas urbanas (cidade) em roxo. É possível perceber a concentração maior da população e dos serviços nas áreas urbanas, evidenciando a desigualdade territorial e a distribuição desigual de recursos e infraestrutura no país.</p>
+    </section>
+
+  </main>
+
+  <script>
+    // Função para mostrar a seção selecionada e esconder as outras
+    function mostrarSecao(secao) {
+      const secoes = ['imagens', 'grafico', 'mapa'];
+      secoes.forEach(id => {
+        document.getElementById(id).style.display = (id === secao) ? 'block' : 'none';
+      });
+    }
+
+    // Toggle tabela de dados do gráfico
+    function toggleTabela() {
+      const tabela = document.getElementById('tabelaDados');
+      tabela.style.display = (tabela.style.display === 'none' || tabela.style.display === '') ? 'table' : 'none';
+    }
+
+    // Dados para o gráfico (com base no IBGE, fictício para exemplo)
+    const dados = {
+      labels: [
+        'Acesso à internet',
+        'Escola com ensino médio completo',
+        'Transporte público disponível',
+        'Abastecimento de água tratada',
+        'Rede de esgoto'
+      ],
+      datasets: [
+        {
+          label: 'Campo (%)',
+          data: [60, 45, 35, 70, 40],
+          backgroundColor: 'rgba(122, 63, 191, 0.7)'
+        },
+        {
+          label: 'Cidade (%)',
+          data: [93, 80, 85, 95, 90],
+          backgroundColor: 'rgba(233, 84, 159, 0.7)'
+        }
+      ]
+    };
+
+    // Configuração do gráfico
+    const configGrafico = {
+      type: 'bar', // gráfico de colunas
+      data: dados,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top', labels: {font: {size: 14, weight: 'bold'}} },
+          title: {
+            display: false,
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              stepSize: 10,
+              callback: value => value + '%'
+            },
+            title: {
+              display: true,
+              text: 'Percentual (%)',
+              font: {size: 14, weight: 'bold'}
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Categorias',
+              font: {size: 14, weight: 'bold'}
+            }
+          }
+        }
+      },
+    };
+
+    // Inicializar gráfico no canvas
+    const ctx = document.getElementById('graficoColunas').getContext('2d');
+    const graficoColunas = new Chart(ctx, configGrafico);
+
+    // Inicializar mapa Leaflet
+    const mapa = L.map('mapa').setView([-15.7801, -47.9292], 4); // Brasília, zoom inicial Brasil
+
+    // Adicionar camada do mapa base OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(mapa);
+
+    // Camadas simuladas: áreas rurais (campo) em verde e urbanas em roxo
+    // Coordenadas exemplo (polígonos simples)
+    const areaRural = L.polygon([
+      [-20, -50],
+      [-18, -50],
+      [-18, -48],
+      [-20, -48]
+    ], {color: 'green', fillColor: 'rgba(0, 128, 0, 0.3)'}).addTo(mapa).bindPopup('Área Rural - Campo');
+
+    const areaUrbana = L.polygon([
+      [-15, -47],
+      [-14, -47],
+      [-14, -46],
+      [-15, -46]
+    ], {color: 'purple', fillColor: 'rgba(128, 0, 128, 0.3)'}).addTo(mapa).bindPopup('Área Urbana - Cidade');
+  </script>
+
+</body>
+</html>
 

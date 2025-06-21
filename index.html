@@ -1,448 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Capacidade: Resistir e Florescer - Campo e Cidade</title>
-
-  <!-- Chart.js para gráfico -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Leaflet para mapa -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capacidade: Resistir e Florescer</title>
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f7fc;
-      color: #3a1a5a;
+      font-family: Arial, sans-serif;
+      background-color: #fdf6ff;
+      color: #333;
       line-height: 1.6;
       padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
-    header {
-      background: #7a3fbf;
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-      width: 100%;
-      border-radius: 0 0 30px 30px;
-      box-shadow: 0 0 18px rgba(122,63,191,0.8);
+    h1, h2, h3 {
+      color: #4a0082;
+    }
+    .section {
       margin-bottom: 40px;
     }
-    header h1 {
-      font-size: 3em;
-      font-weight: 900;
-      letter-spacing: 3px;
-      text-shadow: 2px 2px 8px #b188ff;
-    }
-    header p {
-      font-size: 1.2em;
-      font-weight: 600;
-      margin-top: 8px;
-    }
-
-    main {
-      width: 100%;
-      max-width: 960px;
-    }
-
-    /* Título grande grifado da seção desigualdade */
-    h2.desigualdade {
-      font-size: 2.8em;
-      font-weight: 900;
-      color: #7a3fbf;
-      text-align: center;
-      margin: 40px 0 30px;
-      text-shadow: 2px 2px 8px #b188ff;
-      letter-spacing: 4px;
-    }
-
-    /* Introdução e texto geral */
-    section#introducao, section#desigualdade {
-      background: white;
-      padding: 25px 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 22px rgba(122,63,191,0.3);
-      margin-bottom: 40px;
-      font-size: 1.15em;
-      color: #4a2c7a;
-      text-align: justify;
-      white-space: pre-line; /* para respeitar quebras de linha no texto */
-    }
-
-    /* Navegação entre seções */
-    nav {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 35px;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-    nav button {
-      background: #9b59b6;
-      border: none;
-      color: white;
-      padding: 12px 28px;
-      font-weight: 700;
-      font-size: 1em;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      box-shadow: 0 3px 8px rgba(155,89,182,0.6);
-      user-select: none;
-    }
-    nav button:hover {
-      background: #6e2a8a;
-    }
-
-    /* Imagens e explicações */
-    .imagem-explicacao {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 25px;
-      justify-content: center;
-      margin-bottom: 50px;
-    }
-    .imagem-explicacao figure {
-      width: 280px;
-      text-align: center;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #b188ff88;
-      background: #faf8ff;
-      padding: 15px;
-      transition: transform 0.3s ease;
-    }
-    .imagem-explicacao figure:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 12px 25px #7a3fbfbb;
-    }
-    .imagem-explicacao img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    .imagem-explicacao figcaption {
-      font-size: 0.9em;
-      color: #5b3d8a;
-      line-height: 1.4;
-    }
-
-    /* Gráfico */
-    #grafico-container {
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto 20px;
-    }
-    /* Tabela de dados do gráfico */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      font-size: 0.9em;
-      text-align: center;
-      box-shadow: 0 0 12px #b188ff66;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 14px 10px;
-      border: 1px solid #a580d3;
-    }
-    th {
-      background-color: #9b59b6;
-      color: white;
-      font-weight: 700;
-    }
-    tbody tr:nth-child(odd) {
-      background: #f2e9ff;
-    }
-
-    /* Botão toggle da tabela */
-    .botao-toggle {
+    img {
+      max-width: 100%;
+      height: auto;
       display: block;
-      margin: 10px auto 30px;
-      background: #7a3fbf;
-      color: white;
+      margin: 20px auto;
+      border-radius: 8px;
+    }
+    iframe {
+      width: 100%;
+      height: 450px;
       border: none;
-      padding: 14px 36px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 1.1em;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(122,63,191,0.6);
-      user-select: none;
-      transition: background 0.3s ease;
+      margin-top: 20px;
     }
-    .botao-toggle:hover {
-      background: #5b2e7d;
+    .grafico {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
     }
-
-    /* Mapa */
-    #mapa {
-      height: 440px;
-      border-radius: 20px;
-      box-shadow: 0 0 22px rgba(122,63,191,0.5);
-      margin-bottom: 40px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Responsividade */
-    @media (max-width: 640px) {
-      .imagem-explicacao figure {
-        width: 100%;
-      }
-      nav button {
-        width: 100%;
-      }
+    .explicacao-imagem {
+      margin-bottom: 10px;
+      font-style: italic;
+      color: #555;
     }
   </style>
 </head>
 <body>
+  <h1>Capacidade: Resistir e Florescer</h1>
+  <h3>Colégio Estadual Professora Edith – Sara de Souza – 2025</h3>
 
-  <header>
-    <h1>Capacidade: Resistir e Florescer</h1>
-    <p>Projeto Agrinho - Campo e Cidade</p>
-    <p>Colégio Estadual Professora Edith | Sara Souza</p>
-  </header>
+  <div class="section">
+    <h2>Introdução</h2>
+    <p>A capacidade de resistir e florescer nasce da força do campo e da cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas sim as pessoas. Gente que rala todos os dias, que acorda cedo, enfrenta sol, ônibus lotado, enxada na mão, ou as contas na mente. Que vive com pouco, mas resiste com muito...</p>
+  </div>
 
-  <main>
-    <!-- Navegação -->
-    <nav>
-      <button onclick="mostrarSecao('introducao')">Introdução</button>
-      <button onclick="mostrarSecao('imagens')">Imagens & Explicações</button>
-      <button onclick="mostrarSecao('grafico')">Gráfico & Dados 2025</button>
-      <button onclick="mostrarSecao('mapa')">Mapa Interativo</button>
-      <button onclick="mostrarSecao('desigualdade')"><strong>DESIGUALDADE: CAMPO-E-CIDADE</strong></button>
-    </nav>
+  <div class="section">
+    <h2>Desigualdade: Campo e Cidade</h2>
+    <p>Desigualdade não tem um endereço fixo. Ela nasce onde a oportunidade não chega, onde quem acorda cedo e luta todo santo dia recebe no fim do mês o mínimo...</p>
+  </div>
 
-    <!-- Seções -->
+  <div class="section">
+    <h2>Gráfico: Diferenças entre Campo e Cidade (IBGE 2025)</h2>
+    <div class="grafico">
+      <iframe src="https://www.chartgo.com/share.do?id=bbf44d3a657a45b&amp;lang=pt" title="Gráfico interativo IBGE 2025"></iframe>
+      <p class="explicacao-imagem">Fonte: Dados simulados com base na estrutura do IBGE 2025. Renda média mensal: Cidade R$ 2.450 | Campo R$ 1.300. Internet: Cidade 95% acesso | Campo 48%. Saneamento: Cidade 85% | Campo 54%.</p>
+    </div>
+  </div>
 
-    <!-- Introdução -->
-    <section id="introducao" style="display: block;">
-      <p>
-        A capacidade de resistir e florescer nasce da força do campo e da cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas sim as pessoas. Gente que rala todos os dias, que acorda cedo, enfrenta sol, ônibus lotado, enxada na mão, ou as contas na mente. Que vive com pouco, mas resiste com muito.<br><br>
+  <div class="section">
+    <h2>Mapa Interativo: Campo e Cidade no Brasil</h2>
+    <iframe src="https://www.google.com/maps/d/embed?mid=1EJu1KJuEVZ6vvOT5FKFhQeqLDGE5XxU&ehbc=2E312F"></iframe>
+    <p class="explicacao-imagem">Mapa destacando áreas urbanas e rurais com foco em infraestrutura e acesso a serviços.</p>
+  </div>
 
-        Este portfólio quer dar voz a essas pessoas que muitas vezes são invisíveis. Que trabalham de sol a sol no campo, de segunda a segunda na cidade, tentando crescer sem ter as mesmas chances. Gente que enfrenta a desigualdade, mas não abaixa a cabeça. Que tem coragem, criatividade e força.<br><br>
+  <div class="section">
+    <h2>Imagens Reais: Campo e Cidade</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Agricultura_brasileira.jpg" alt="Trabalho no campo">
+    <p class="explicacao-imagem">A força da agricultura familiar: o campo alimenta a cidade.</p>
 
-        Quero que quem leia este projeto enxergue além do concreto ou da terra batida. Veja a interdependência entre o campo e a cidade: o campo alimenta, a cidade distribuída; o campo planta, a cidade processa. Um depende do outro. A roça precisa de ferramentas, tecnologia, transporte. A cidade precisa de comida, natureza, raízes.<br><br>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Favela_do_Alem%C3%A3o_-_Rio_de_Janeiro.jpg" alt="Favela no Rio">
+    <p class="explicacao-imagem">Desigualdade urbana: coragem e resistência em meio à falta de estrutura.</p>
 
-        O campo resiste com sua sabedoria popular, com a terra molhada e a colheita que sustenta. A cidade resiste com os gritos nos becos, com as crianças que sonham alto mesmo em lajes emocionantes. Ambas florescem em meio às dificuldades, sustentadas por quem tem capacidade de continuar.<br><br>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Mulher_plantando_em_ro%C3%A7a.jpg" alt="Mulher trabalhando na roça">
+    <p class="explicacao-imagem">O cuidado e a resistência da mulher do campo.</p>
 
-        Este portfólio é um grito, um poema, uma carta de amor e de luta ao Brasil real. É sobre campo e cidade, mas é, sobretudo, sobre gente. Gente que resiste. Gente que floresce.
-      </p>
-    </section>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Tr%C3%AAnsuburbanoSP.jpg" alt="Transporte urbano">
+    <p class="explicacao-imagem">Cidade grande e o transporte de massa: pressa e desigualdade se cruzam.</p>
 
-    <!-- Imagens com explicações -->
-    <section id="imagens" style="display:none;">
-      <h2>Imagens do Campo e da Cidade com Explicações</h2>
-      <div class="imagem-explicacao">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Transporte_rural.jpg" alt="Caminhão rural">
+    <p class="explicacao-imagem">O transporte no campo: limitado, mas essencial à produção.</p>
 
-        <figure>
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Paisagem de campo com plantações" />
-          <figcaption><strong>Campo:</strong> Esta foto mostra a vastidão do campo com plantações verdes, simbolizando o trabalho duro dos agricultores que sustentam a vida com o cultivo da terra. É um espaço onde o contato com a natureza é constante, mas também onde há desafios como acesso precário à internet e serviços básicos.</figcaption>
-        </figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Sao_Paulo_skyline_daylight.jpg" alt="Cidade de São Paulo">
+    <p class="explicacao-imagem">Centro urbano com grandes estruturas: oportunidades e contrastes.</p>
 
-        <figure>
-          <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=400&q=80" alt="Vista urbana de uma cidade grande" />
-          <figcaption><strong>Cidade:</strong> A imagem retrata uma cidade grande com prédios altos e ruas movimentadas, onde há mais acesso a serviços, educação e tecnologia. Porém, a desigualdade também é visível em áreas periféricas que enfrentam desafios como moradia e transporte público insuficientes.</figcaption>
-        </figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Rede_de_saneamento.jpg" alt="Saneamento básico">
+    <p class="explicacao-imagem">Saneamento básico ainda é um desafio no campo.</p>
 
-        <figure>
-          <img src="https://images.unsplash.com/photo-1542224566-8886d1940d30?auto=format&fit=crop&w=400&q=80" alt="Transporte rural, caminhonete na estrada" />
-          <figcaption><strong>Transporte no Campo:</strong> Muitas pessoas dependem de veículos como caminhonetes para se locomover em estradas não pavimentadas, o que dificulta o acesso à cidade e a serviços essenciais, refletindo a distância e a desigualdade de infraestrutura.</figcaption>
-        </figure>
-
-        <figure>
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Ponto de ônibus na cidade" />
-          <figcaption><strong>Transporte na Cidade:</strong> Apesar de haver transporte público regular nas cidades, ele pode ser insuficiente e superlotado, tornando o deslocamento um desafio diário, principalmente para quem mora em bairros mais afastados.</figcaption>
-        </figure>
-
-      </div>
-    </section>
-
-    <!-- Gráfico com tabela -->
-    <section id="grafico" style="display:none;">
-      <h2>Gráfico de Colunas: Dados sobre Campo e Cidade (2025)</h2>
-      <div id="grafico-container">
-        <canvas id="graficoColunas"></canvas>
-      </div>
-      <button class="botao-toggle" onclick="toggleTabela()">Mostrar/Ocultar Tabela de Dados</button>
-      <table id="tabelaDados" style="display:none;">
-        <thead>
-          <tr>
-            <th>Indicador</th>
-            <th>Campo (%)</th>
-            <th>Cidade (%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Acesso à Internet</td><td>55</td><td>85</td></tr>
-          <tr><td>Taxa de Escolaridade</td><td>65</td><td>92</td></tr>
-          <tr><td>Acesso a Transporte Público</td><td>40</td><td>78</td></tr>
-          <tr><td>Renda Média</td><td>1200</td><td>2800</td></tr>
-          <tr><td>Desemprego</td><td>15</td><td>9</td></tr>
-          <tr><td>Saneamento Básico</td><td>48</td><td>88</td></tr>
-        </tbody>
-      </table>
-      <p style="margin-top: 20px; font-size: 0.95em; color: #5a3a90;">
-        * Dados baseados em projeções e estatísticas do IBGE para 2024-2025, simulados para efeito do gráfico.<br />
-        * Valores em porcentagem (%) ou reais (R$) conforme o indicador.
-      </p>
-    </section>
-
-    <!-- Mapa -->
-    <section id="mapa" style="display:none;">
-      <h2>Mapa Interativo do Brasil: Áreas Rurais (verde) e Urbanas (roxo)</h2>
-      <div id="mapa"></div>
-      <p style="text-align:center; font-size: 0.9em; color: #6a4fa2; margin-top: 10px;">
-        O mapa mostra as principais áreas rurais em verde e urbanas em roxo. Mapa fixo, não interativo para movimentação, apenas visualização.
-      </p>
-    </section>
-
-    <!-- Seção desigualdade (texto) -->
-    <section id="desigualdade" style="display:none;">
-      <h2 class="desigualdade">DESIGUALDADE: CAMPO-E-CIDADE</h2>
-      <p>
-        desigualdade não tem um endereço fixo. Ela nasce onde a oportunidade não chega, onde quem acorda cedo e luta todo santo dia, recebe no fim do mês o mínimo — um salário que mal paga o aluguel e não cobre nem o que coloca no prato.<br><br>
-
-        Ela mora onde o esforço não traz respeito, e muito menos reconhecimento. Onde o talento é silenciado pela falta de acesso, pela ausência de apoio, pela distância da chance que nunca chega.<br><br>
-
-        Ela vive nas esquinas da cidade grande, nos corredores abafados, nas fábricas, nas filas de emprego que nunca andam, que deixam a esperança suada, em pé, sem resposta.<br><br>
-
-        Tem gente que se levanta antes do sol nascer, enfrenta dois ônibus lotados, enfrenta o calor, o barulho, o corre. Trabalha o dia inteiro limpando, carregando, vendendo, e mesmo assim o salário não cobre nem o básico. Vive para trabalhar, mas não trabalha para viver. Faz hora extra e não ganha reconhecimento. Estuda à noite até de madrugada, com internet de escada — ainda por cima fraca — que mal carrega uma página. Com o corpo cansado do trabalho, mas com o sonho aceso no peito. Mesmo invisível, segue lutando por uma vaga, uma chance, um futuro.<br><br>
-
-        No campo, a terra é vasta, mas a estrutura é pouca. Tem criança que caminha quilômetros até a escola, quando consegue chegar — às vezes a escola fica na cidade vizinha, mas falta transporte, falta estrada. Tem criança que atravessa o barro, o riacho descalça, chega suada, suja, cansada, e muitas vezes não tem aula.<br><br>
-
-        Tem criança larga que o caderno não por escolha, mas por necessidade. Troque os estudos pela enxada, para ajudar os pais na roça, para garantir o que come em casa, para manter a mesa posta — mesmo sem salário.<br><br>
-
-        Ainda assim, no campo há fartura vinda da terra, comida plantada com as próprias mãos, amor colhido no quintal da família. Tem mãe que leva a marmita com carinho até o milharal para o marido não parar no meio da linha. Tem pai que ensina a plantar desde pequeno, como quem ensina a resistir. Ali, a união é força. O trabalho é vida.<br><br>
-
-        E no meio disso tudo, existe também uma favela. Não como símbolo exclusivo de desigualdade, mas como mais um retrato dela. Onde falta espaço, lazer, saneamento, mas sobra talento, coragem, música e arte. Onde a luta é diária, mas o brilho nos olhos não se apaga.<br><br>
-
-        A cidade concentra hospitais, universidades, empregos. Mas a desigualdade mora nos detalhes que ninguém vê: na mochila pesada do entregador, na roupa encharcada do ambulante que cruza bairros para vender um saco de balas, e ainda assim voltar para casa com pouco. Na diarista que anda quilômetros a pé, com o pé atrasado e o coração firme, acreditando que, no fim do mês, vai conseguir colocar comida na mesa da família.<br><br>
-
-        Tem gente que carrega a cidade nas costas — que limpa os prédios, serve o café, cuida dos filhos dos outros — e mesmo assim é mal vista, esquecida.<br><br>
-
-        Enquanto alguns nascem com tudo pronto, com tudo de mão beijada, outros nascem com pressa — pressa de crescer, de trabalhar, de ajudar em casa, porque a fome não espera o futuro chegar.<br><br>
-
-        A desigualdade pinta o rosto de todas as cores. Ela mora no bolso vazio, no estômago que aperta, na geladeira que só tem água e silêncio. Ela mora na lágrima contida, de quem não pode parar nem para chorar, porque precisa levantar cedo e continuar lutando.<br><br>
-
-        No campo ou na cidade, resistir é um ato de coragem. E florescer, mesmo com pouco, é um grito de força no peito de quem luta todo santo dia — porque onde há resistência, há também a esperança de transformar o mundo.
-      </p>
-    </section>
-
-  </main>
-
-<script>
-  // Função para mostrar/esconder seções ao clicar nos botões
-  function mostrarSecao(secao) {
-    const secoes = ['introducao', 'imagens', 'grafico', 'mapa', 'desigualdade'];
-    secoes.forEach(s => {
-      document.getElementById(s).style.display = s === secao ? 'block' : 'none';
-    });
-  }
-
-  // Gráfico de colunas (dados simulados IBGE 2025)
-  const ctx = document.getElementById('graficoColunas').getContext('2d');
-  const graficoColunas = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: [
-        'Acesso à Internet (%)', 
-        'Taxa de Escolaridade (%)', 
-        'Acesso a Transporte Público (%)', 
-        'Renda Média (R$)', 
-        'Desemprego (%)', 
-        'Saneamento Básico (%)'
-      ],
-      datasets: [
-        {
-          label: 'Campo',
-          data: [55, 65, 40, 1200, 15, 48],
-          backgroundColor: 'rgba(122, 63, 191, 0.7)',
-          borderColor: 'rgba(122, 63, 191, 1)',
-          borderWidth: 1,
-          borderRadius: 6,
-          barPercentage: 0.6,
-        },
-        {
-          label: 'Cidade',
-          data: [85, 92, 78, 2800, 9, 88],
-          backgroundColor: 'rgba(183, 132, 255, 0.8)',
-          borderColor: 'rgba(147, 84, 241, 1)',
-          borderWidth: 1,
-          borderRadius: 6,
-          barPercentage: 0.6,
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { labels: { color: '#4a2c7a', font: {weight:'bold', size:14} }},
-        tooltip: { enabled: true }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#4a2c7a', font: {size: 13, weight:'bold'} },
-          grid: { color: '#d9cffd' },
-        },
-        x: {
-          ticks: { color: '#5a3a90', font: {size: 12, weight:'bold'} },
-          grid: { color: 'transparent' }
-        }
-      }
-    }
-  });
-
-  // Toggle mostrar/ocultar tabela dados
-  function toggleTabela() {
-    const tabela = document.getElementById('tabelaDados');
-    if (tabela.style.display === 'none') {
-      tabela.style.display = 'table';
-    } else {
-      tabela.style.display = 'none';
-    }
-  }
-
-  // Inicializa o mapa Leaflet
-  const mapa = L.map('mapa', {
-    center: [-14.2350, -51.9253], // Centro aproximado do Brasil
-    zoom: 4,
-    dragging: false,
-    zoomControl: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false,
-    tap: false,
-  });
-
-  // Adiciona camada base do OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(mapa);
-
-  // Polígonos simplificados para áreas rurais e urbanas do Brasil (exemplo simples)
-  const areaRural = L.polygon([
-    [-5, -70], [-10, -60], [-15, -55], [-20, -60], [-15, -70]
-  ], {color: 'green', fillColor: '#2ecc40', fillOpacity: 0.5, weight: 2}).addTo(mapa).bindPopup('Área Rural');
-
-  const areaUrbana = L.polygon([
-    [-3, -50], [-7, -45], [-12, -40], [-14, -45], [-10, -50]
-  ], {color: 'purple', fillColor: '#9b59b6', fillOpacity: 0.6, weight: 2}).addTo(mapa).bindPopup('Área Urbana');
-
-</script>
-
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Interdepend%C3%AAncia_campo_cidade.jpg" alt="Campo e cidade">
+    <p class="explicacao-imagem">A interdependência entre campo e cidade: um depende do outro para crescer.</p>
+  </div>
 </body>
 </html>

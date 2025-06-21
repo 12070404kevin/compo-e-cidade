@@ -6,154 +6,136 @@
   <title>Capacidade: Resistir e Florescer</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
+      background: #f5f5fa;
+      color: #333;
       margin: 0;
       padding: 0;
-      background-color: #fdf6ff;
-      color: #333;
     }
     header {
-      background-color: #6a1b9a;
+      background: linear-gradient(to right, #d36dc6, #5ad1cc);
       color: white;
-      padding: 20px;
+      padding: 2rem;
       text-align: center;
-    }
-    h1, h2, h3 {
-      color: #4a148c;
-    }
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
     }
     section {
-      margin-bottom: 50px;
+      padding: 1.5rem;
     }
-    .img-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
+    h2 {
+      color: #6a1b9a;
     }
-    .img-grid img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
+    .grafico-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
     }
-    .img-caption {
-      font-size: 14px;
+    .barra {
+      width: 40px;
+      height: 200px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .barra:hover {
+      transform: scale(1.1);
+    }
+    .barra span {
+      position: absolute;
+      bottom: 100%;
+      background: #fff;
+      padding: 0.3rem;
+      border-radius: 5px;
+      display: none;
+      font-size: 0.8rem;
+      max-width: 120px;
       text-align: center;
-      margin-top: 5px;
+    }
+    .barra:hover span {
+      display: block;
+    }
+    .legenda {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .legenda div {
+      margin: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.9rem;
+    }
+    .imagens {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .imagens img {
+      width: 300px;
+      border-radius: 12px;
     }
     iframe {
       width: 100%;
       height: 400px;
       border: none;
-      margin-top: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #e1bee7;
-    }
-    footer {
-      background-color: #6a1b9a;
-      color: white;
-      text-align: center;
-      padding: 10px;
+      border-radius: 8px;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Capacidade: Resistir e Florescer</h1>
-    <p>Colégio Estadual Professora Edith | Sara D. Souza | 2025</p>
+    <p>Colégio Estadual Professora Edith | Entrega: 22/06/2025</p>
   </header>
 
-  <div class="container">
-    <section id="introducao">
-      <h2>Introdução</h2>
-      <p>A capacidade de resistir e florescer nasce da força do campo e da cidade...</p>
-      <!-- Texto completo inserido aqui -->
-    </section>
+  <section>
+    <h2>Imagens sobre Campo e Cidade</h2>
+    <div class="imagens">
+      <img src="/mnt/data/images.jpg" alt="Imagem Campo">
+      <img src="/mnt/data/1_AVjAk-grlXhJ72RJ65QOKA.webp" alt="Imagem Cidade">
+      <img src="/mnt/data/images.jpg" alt="Imagem Campo 2">
+      <img src="/mnt/data/images.jpg" alt="Imagem Cidade 2">
+    </div>
+  </section>
 
-    <section id="desigualdade">
-      <h2>Desigualdade: Campo e Cidade</h2>
-      <p>Desigualdade não tem um endereço fixo...</p>
-      <!-- Texto completo inserido aqui -->
-    </section>
-
-    <section id="grafico">
-      <h2>Gráfico: Diferenças Campo e Cidade (IBGE 2025)</h2>
-      <table>
-        <tr><th>Aspecto</th><th>Campo</th><th>Cidade</th></tr>
-        <tr><td>Renda média mensal</td><td>R$ 1.200</td><td>R$ 2.500</td></tr>
-        <tr><td>Acesso à internet</td><td>52%</td><td>91%</td></tr>
-        <tr><td>Transporte público</td><td>25%</td><td>88%</td></tr>
-        <tr><td>Educação básica completa</td><td>63%</td><td>89%</td></tr>
-        <tr><td>Acesso à saúde</td><td>40%</td><td>82%</td></tr>
-      </table>
-    </section>
-
-    <section id="imagens">
-      <h2>Imagens do Campo e da Cidade</h2>
-      <div class="img-grid">
-        <div>
-          <img src="campo1.jpg" alt="Trabalho no campo">
-          <div class="img-caption">Família trabalhando na colheita manual</div>
-        </div>
-        <div>
-          <img src="campo2.jpg" alt="Escola rural">
-          <div class="img-caption">Crianças caminhando para escola no campo</div>
-        </div>
-        <div>
-          <img src="campo3.jpg" alt="Vida simples">
-          <div class="img-caption">Casa de barro e fogão à lenha - cotidiano rural</div>
-        </div>
-        <div>
-          <img src="cidade1.jpg" alt="Cidade grande">
-          <div class="img-caption">Movimento urbano em horário de pico</div>
-        </div>
-        <div>
-          <img src="cidade2.jpg" alt="Trabalho urbano">
-          <div class="img-caption">Diarista se deslocando para o trabalho</div>
-        </div>
-        <div>
-          <img src="cidade3.jpg" alt="Favela e arte">
-          <div class="img-caption">Favela com arte urbana e resistência cultural</div>
-        </div>
-        <div>
-          <img src="comparacao1.jpg" alt="Campo e cidade">
-          <div class="img-caption">Paisagem do campo ao lado de arranha-céus</div>
-        </div>
-        <div>
-          <img src="comparacao2.jpg" alt="Interdependência">
-          <div class="img-caption">Produtos do campo sendo vendidos na cidade</div>
-        </div>
+  <section>
+    <h2>Gráfico Interativo: Diferenças Campo x Cidade</h2>
+    <div class="grafico-container">
+      <div class="barra" style="background: #f06292; height: 150px;">
+        <span>Educação: acesso limitado no campo, melhores condições na cidade</span>
       </div>
-    </section>
+      <div class="barra" style="background: #ba68c8; height: 120px;">
+        <span>Saúde: escassez de postos no campo, mais hospitais urbanos</span>
+      </div>
+      <div class="barra" style="background: #4dd0e1; height: 110px;">
+        <span>Internet: fraca ou ausente no campo, presente nas cidades</span>
+      </div>
+      <div class="barra" style="background: #81c784; height: 130px;">
+        <span>Transporte: ausência de linhas no campo, vários ônibus urbanos</span>
+      </div>
+      <div class="barra" style="background: #ffb74d; height: 90px;">
+        <span>Renda: média baixa no campo, maior na cidade</span>
+      </div>
+    </div>
+    <div class="legenda">
+      <div style="background: #f06292;">Educação</div>
+      <div style="background: #ba68c8;">Saúde</div>
+      <div style="background: #4dd0e1;">Internet</div>
+      <div style="background: #81c784;">Transporte</div>
+      <div style="background: #ffb74d;">Renda</div>
+    </div>
+  </section>
 
-    <section id="mapa">
-      <h2>Mapa: Distribuição Urbana e Rural</h2>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15891750.479049608!2d-60.21830374095198!3d-14.23500404264598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bccd65e49ad2d%3A0xf987d6e6125d0957!2sBrasil!5e0!3m2!1spt-BR!2sbr!4v1688827361354!5m2!1spt-BR!2sbr" allowfullscreen=""></iframe>
-    </section>
-
-    <section id="conclusao">
-      <h2>Conclusão</h2>
-      <p>O Brasil pulsa em diferentes ritmos: do campo à cidade, entre dificuldades e resistências, o que há em comum é a coragem de florescer. Este portfólio é reflexo de uma juventude que observa, sente e quer mudança.</p>
-    </section>
-  </div>
-
-  <footer>
-    <p>Projeto Agrinho 2025 — Desenvolvido por Sara D. Souza | Colégio Estadual Professora Edith</p>
-  </footer>
+  <section>
+    <h2>Mapa Interativo (Campo e Cidade)</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15558.546437493935!2d-47.9292!3d-15.7801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1718990000000" allowfullscreen></iframe>
+  </section>
 </body>
 </html>

@@ -1,106 +1,217 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacidade: Resistir e Florescer</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body { font-family: 'Arial', sans-serif; background-color: #f9f6fc; }
-    .grafico-barra canvas { max-height: 400px; }
-    .imagem-galeria img { width: 100%; max-width: 400px; border-radius: 16px; margin: 10px auto; display: block; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Capacidade: Resistir e Florescer - Portfólio Agrinho</title>
+<style>
+  /* Reset básico */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a64ca6, #5c3a8a, #2a9d8f);
+    background-size: 400% 400%;
+    animation: bgAnim 25s ease infinite;
+    color: #f0e9f0;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @keyframes bgAnim {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  header h1 {
+    font-size: 3rem;
+    text-shadow: 3px 3px 6px #3d0073;
+    margin-bottom: 8px;
+  }
+
+  header p {
+    font-size: 1.3rem;
+    font-style: italic;
+    opacity: 0.85;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  nav {
+    margin-bottom: 25px;
+  }
+
+  nav button {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 30px;
+    padding: 12px 28px;
+    margin: 0 12px;
+    font-weight: 700;
+    color: #f9f9f9;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1.1rem;
+  }
+
+  nav button:hover,
+  nav button.active {
+    background: #f9f9f9;
+    color: #5c3a8a;
+    box-shadow: 0 0 20px #c29dff;
+  }
+
+  section {
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 30px 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    color: #fafafa;
+    display: none;
+    line-height: 1.7;
+    font-size: 1.15rem;
+    text-align: justify;
+  }
+
+  section.active {
+    display: block;
+  }
+
+  section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #d8b4f2;
+    padding-bottom: 8px;
+    color: #ddb3ff;
+    text-align: center;
+  }
+
+  /* Parágrafos com espaçamento */
+  section p {
+    margin-bottom: 15px;
+  }
+
+  /* Destaque para frases poéticas */
+  .destaque {
+    font-style: italic;
+    font-weight: 600;
+    color: #ffd9f7;
+    margin: 25px 0;
+    text-align: center;
+  }
+
+  footer {
+    margin-top: auto;
+    padding: 15px 10px;
+    color: #eee;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  /* Responsividade */
+  @media (max-width: 650px) {
+    nav button {
+      margin: 10px 6px;
+      padding: 10px 18px;
+      font-size: 1rem;
+    }
+    section {
+      padding: 20px 25px;
+      font-size: 1rem;
+    }
+    header h1 {
+      font-size: 2rem;
+    }
+    section h2 {
+      font-size: 1.6rem;
+    }
+  }
+</style>
 </head>
-<body class="text-gray-800">
+<body>
 
-  <!-- CAPA -->
-  <section class="bg-pink-200 text-center py-10">
-    <h1 class="text-4xl font-bold text-purple-700">Capacidade: Resistir e Florescer</h1>
-    <p class="mt-2 text-lg">Colégio Estadual Professora Edith | 2025</p>
-  </section>
+<header>
+  <h1>Capacidade: Resistir e Florescer</h1>
+  <p>Portfólio do projeto Agrinho sobre a capacidade de resistir e florescer no campo e na cidade.</p>
+</header>
 
-  <!-- INTRODUÇÃO -->
-  <section class="px-6 py-10 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold text-pink-700 mb-4"># Capacidade: Resistir e Florescer</h2>
-    <p class="mb-4">A capacidade de resistir e florescer nasce da força do campo e da cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas sim as pessoas...</p>
-    <p class="mb-4">[Texto completo inserido aqui, como enviado pela autora]</p>
-  </section>
+<nav>
+  <button id="btn-intro" class="active" onclick="mostrarSecao('introducao')">Introdução</button>
+  <button id="btn-desigualdade" onclick="mostrarSecao('desigualdade')">Desigualdade</button>
+</nav>
 
-  <!-- DESIGUALDADE TEXTO -->
-  <section class="bg-purple-100 px-6 py-10 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold text-purple-800 mb-4"># DESIGUALDADE: CAMPO-E-CIDADE</h2>
-    <p class="mb-4">[Texto completo da seção "Desigualdade: Campo e Cidade" inserido aqui, como enviado pela autora]</p>
-  </section>
+<section id="introducao" class="active">
+  <h2>Introdução</h2>
+  <p>
+    A capacidade de resistir e florescer nasce da força do campo e da cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas sim as pessoas. Gente que rala todos os dias, que acorda cedo, enfrenta sol, ônibus lotado, enxada na mão, ou as contas na mente. Que vive com pouco, mas resiste com muito.
+  </p>
+  <p>
+    Este portfólio quer dar voz a essas pessoas que muitas vezes são invisíveis. Que trabalham de sol a sol no campo, de segunda a segunda na cidade, tentando crescer sem ter as mesmas chances. Gente que enfrenta a desigualdade, mas não abaixa a cabeça. Que tem coragem, criatividade e força.
+  </p>
+  <p>
+    Quero que quem leia este projeto enxergue além do concreto ou da terra batida. Veja a interdependência entre o campo e a cidade: o campo alimenta, a cidade distribui; o campo planta, a cidade processa. Um depende do outro. A roça precisa de ferramentas, tecnologia, transporte. A cidade precisa de comida, natureza, raízes.
+  </p>
+  <p>
+    O campo resiste com sua sabedoria popular, com a terra molhada e a colheita que sustenta. A cidade resiste com os gritos nos becos, com as crianças que sonham alto mesmo em lajes apertadas. Ambas florescem em meio às dificuldades, sustentadas por quem tem a capacidade de continuar.
+  </p>
+  <p class="destaque">
+    Este portfólio é um grito, um poema, uma carta de amor e de luta ao Brasil real. É sobre campo e cidade, mas é, sobretudo, sobre gente. Gente que resiste. Gente que floresce.
+  </p>
+</section>
 
-  <!-- IMAGENS -->
-  <section class="imagem-galeria bg-white py-10 px-6">
-    <h2 class="text-2xl font-bold text-blue-700 mb-6 text-center">Imagens do Campo e da Cidade</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <img src="images/campo1.jpg" alt="Campo 1">
-      <img src="images/campo2.jpg" alt="Campo 2">
-      <img src="images/campo3.jpg" alt="Campo 3">
-      <img src="images/cidade1.jpg" alt="Cidade 1">
-      <img src="images/cidade2.jpg" alt="Cidade 2">
-      <img src="images/cidade3.jpg" alt="Cidade 3">
-      <img src="images/diferenca1.jpg" alt="Diferença 1">
-      <img src="images/diferenca2.jpg" alt="Diferença 2">
-    </div>
-  </section>
+<section id="desigualdade">
+  <h2>Desigualdade: Campo e Cidade</h2>
+  <p>Desigualdade não tem um endereço fixo.</p>
+  <p>Ela nasce onde a oportunidade não chega, onde quem acorda cedo e luta todo santo dia, recebe no fim do mês o mínimo — um salário que mal paga o aluguel e não cobre nem o que colocar no prato.</p>
+  <p>Ela mora onde o esforço não traz respeito, e muito menos reconhecimento. Onde o talento é silenciado pela falta de acesso, pela ausência de apoio, pela distância da chance que nunca chega.</p>
+  <p>Ela vive nas esquinas da cidade grande, nos corredores abafados, nas fábricas, nas filas de emprego que nunca andam, que deixam a esperança suada, em pé, sem resposta.</p>
+  <p>Tem gente que levanta antes do sol nascer, encara dois ônibus lotados, enfrenta o calor, o barulho, o corre. Trabalha o dia inteiro limpando, carregando, vendendo, e mesmo assim o salário não cobre nem o básico. Vive para trabalhar, mas não trabalha para viver. Faz hora extra e não ganha reconhecimento. Estuda à noite até a madrugada, com internet de escada — ainda por cima fraca — que mal carrega uma página. Com o corpo cansado do trabalho, mas com o sonho aceso no peito. Mesmo invisível, segue lutando por uma vaga, uma chance, um futuro.</p>
+  <p>No campo, a terra é vasta, mas a estrutura é pouca. Tem criança que caminha quilômetros até a escola, quando consegue chegar — às vezes a escola fica na cidade vizinha, mas falta transporte, falta estrada. Tem criança que atravessa o barro, o riacho descalça, chega suada, suja, cansada, e muitas vezes não tem aula.</p>
+  <p>Tem criança que larga o caderno não por escolha, mas por necessidade. Troca os estudos pela enxada, para ajudar os pais na roça, para garantir o que comer em casa, para manter a mesa posta — mesmo sem salário.</p>
+  <p>Ainda assim, no campo há fartura vinda da terra, comida plantada com as próprias mãos, amor colhido no quintal da família. Tem mãe que leva a marmita com carinho até o milharal para o marido não parar no meio da linha. Tem pai que ensina a plantar desde pequeno, como quem ensina a resistir. Ali, a união é força. O trabalho é vida.</p>
+  <p>E no meio disso tudo, existe também a favela. Não como símbolo exclusivo da desigualdade, mas como mais um retrato dela. Onde falta espaço, lazer, saneamento, mas sobra talento, coragem, música e arte. Onde a luta é diária, mas o brilho nos olhos não se apaga.</p>
+  <p>A cidade concentra hospitais, universidades, empregos. Mas a desigualdade mora nos detalhes que ninguém vê: na mochila pesada do entregador, na roupa encharcada do ambulante que cruza bairros para vender um saco de balas, e ainda assim voltar para casa com pouco. Na diarista que anda quilômetros a pé, com o pé latejando e o coração firme, acreditando que, no fim do mês, vai conseguir colocar comida na mesa da família.</p>
+  <p>Tem gente que carrega a cidade nas costas — que limpa os prédios, serve o café, cuida dos filhos dos outros — e mesmo assim é mal vista, esquecida.</p>
+  <p>Enquanto alguns nascem com tudo pronto, com tudo de mão beijada, outros nascem com pressa — pressa de crescer, de trabalhar, de ajudar em casa, porque a fome não espera o futuro chegar.</p>
+  <p>A desigualdade pinta o rosto de todas as cores. Ela mora no bolso vazio, no estômago que aperta, na geladeira que só tem água e silêncio. Ela mora na lágrima contida, de quem não pode parar nem para chorar, porque precisa levantar cedo e continuar lutando.</p>
+  <p>No campo ou na cidade, resistir é um ato de coragem. E florescer, mesmo com pouco, é um grito de força no peito de quem luta todo santo dia — porque onde há resistência, há também a esperança de transformar o mundo.</p>
+</section>
 
-  <!-- GRÁFICO 1 -->
-  <section class="grafico-barra py-10 px-6 bg-pink-50">
-    <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Desigualdade: Campo e Cidade (Fonte: Pesquisa Google)</h2>
-    <canvas id="grafico1"></canvas>
-    <script>
-      const ctx = document.getElementById('grafico1').getContext('2d');
-      const grafico1 = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Educação', 'Internet', 'Saúde', 'Transporte', 'Saneamento', 'Emprego', 'Renda', 'Cultura', 'Meio Ambiente'],
-          datasets: [{
-            label: 'Campo',
-            data: [30, 15, 40, 10, 20, 25, 18, 8, 22],
-            backgroundColor: '#84cc16'
-          }, {
-            label: 'Cidade',
-            data: [80, 90, 75, 85, 78, 55, 62, 45, 33],
-            backgroundColor: '#a855f7'
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            tooltip: { enabled: true },
-            legend: { position: 'top' }
-          },
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
-    </script>
-  </section>
+<footer>
+  &copy; 2025 Sara Souza - Colégio Estadual Professora Edith
+</footer>
 
-  <!-- MAPA -->
-  <section class="px-6 py-10">
-    <h2 class="text-2xl font-bold text-blue-800 mb-4 text-center">Mapa Interativo</h2>
-    <p class="text-center mb-6">Clique no botão abaixo para acessar o mapa com informações sobre o campo e a cidade.</p>
-    <div class="flex justify-center">
-      <a href="https://www.google.com/maps" target="_blank" class="bg-pink-600 text-white px-6 py-3 rounded-full hover:bg-pink-700">Acessar Mapa</a>
-    </div>
-  </section>
+<script>
+  function mostrarSecao(id) {
+    const secoes = document.querySelectorAll('section');
+    secoes.forEach(secao => {
+      secao.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
 
-  <!-- CURIOSIDADES -->
-  <section class="bg-gray-100 px-6 py-10 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold text-green-700 mb-4">Curiosidades</h2>
-    <ul class="list-disc pl-6">
-      <li>O campo produz mais de 70% dos alimentos consumidos no Brasil.</li>
-      <li>Na cidade, o acesso à educação superior é 3 vezes maior do que no campo.</li>
-      <li>Mais de 10 milhões de brasileiros vivem em áreas rurais com acesso limitado à internet.</li>
-      <li>A poluição das cidades afeta diretamente a qualidade da água em regiões rurais.</li>
-    </ul>
-  </section>
+    // Ativar botão correto
+    document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+    if(id === 'introducao') {
+      document.getElementById('btn-intro').classList.add('active');
+    } else if(id === 'desigualdade') {
+      document.getElementById('btn-desigualdade').classList.add('active');
+    }
+  }
+</script>
 
 </body>
 </html>

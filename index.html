@@ -1,616 +1,609 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Capacidade: Resistir e Florescer - Projeto Agrinho 2025</title>
-<style>
-  /* Reset e básicos */
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f7f3fb;
-    color: #222;
-    line-height: 1.5;
-    padding-top: 140px; /* espaço para header fixo */
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capacidade: Resistir e Florescer - Sara Souza</title>
 
-  /* === CAPA FIXA === */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    background: linear-gradient(90deg, #d99bf5, #6a53b5);
-    color: white;
-    padding: 25px 30px;
-    box-shadow: 0 3px 10px rgba(100,50,130,0.4);
-    z-index: 9999;
-  }
-  header h1 {
-    font-size: 1.9rem;
-    margin-bottom: 6px;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px #44006699;
-  }
-  header p {
-    font-size: 1rem;
-    opacity: 0.9;
-  }
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-  /* === MAIN === */
-  main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px 15px;
-  }
+    body {
+      background: #f9f6fc;
+      color: #222;
+      line-height: 1.6;
+      padding-top: 140px; /* espaço para a capa fixa */
+      min-height: 100vh;
+    }
 
-  section {
-    margin-bottom: 50px;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-    color: #6a53b5;
-    margin-bottom: 15px;
-    border-bottom: 3px solid #d99bf5;
-    padding-bottom: 5px;
-  }
-
-  /* Texto seções introdução e desigualdade */
-  #introducao p, #desigualdade p {
-    margin-bottom: 16px;
-    font-size: 1.1rem;
-  }
-  #desigualdade {
-    background: #f0e6fa;
-    padding: 20px 25px;
-    border-radius: 12px;
-    box-shadow: inset 0 0 15px #d6c5f7;
-  }
-
-  /* === GRÁFICO 1 - BARRAS INTERATIVO === */
-  #grafico1 {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 0 20px #d6c5f7cc;
-    padding: 25px;
-  }
-  .barra {
-    background: linear-gradient(90deg, #d99bf5, #6a53b5);
-    color: white;
-    font-weight: 700;
-    padding: 10px 15px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    outline: none;
-  }
-  .barra:hover, .barra:focus {
-    background: linear-gradient(90deg, #6a53b5, #d99bf5);
-  }
-  .barra span.percent {
-    float: right;
-    font-weight: 900;
-    font-size: 1.1rem;
-  }
-  #descricaoGrafico1 {
-    margin-top: 20px;
-    background: #f3eafd;
-    padding: 15px 20px;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    color: #4b2a74;
-    min-height: 100px;
-    box-shadow: inset 0 0 10px #b89eee;
-  }
-
-  /* === MAPA EMBUTIDO === */
-  #mapa {
-    margin: 40px auto;
-    max-width: 900px;
-    height: 400px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #b89eee88;
-    overflow: hidden;
-  }
-  iframe {
-    border: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* === GRÁFICO 2 - REDONDO (PIE CHART) === */
-  #grafico2 {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #d6c5f7cc;
-    text-align: center;
-  }
-  #grafico2 canvas {
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* === TABELA INTERATIVA === */
-  #tabelaJovens {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #d6c5f7cc;
-    overflow-x: auto;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1rem;
-  }
-  th, td {
-    border: 1px solid #6a53b5;
-    padding: 8px 10px;
-    text-align: center;
-    color: #4b2a74;
-  }
-  th {
-    background: #d99bf5;
-    color: white;
-  }
-
-  /* === GALERIA DE FOTOS COM MODAL === */
-  #galeria {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
-    gap: 15px;
-  }
-  #galeria figure {
-    cursor: pointer;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 15px #b89eee88;
-    background: white;
-    transition: transform 0.3s ease;
-  }
-  #galeria figure:hover, #galeria figure:focus {
-    transform: scale(1.05);
-    outline: none;
-  }
-  #galeria img {
-    width: 100%;
-    display: block;
-  }
-  #galeria figcaption {
-    padding: 8px;
-    font-weight: 600;
-    color: #6a53b5;
-    text-align: center;
-    background: #f0e6fa;
-  }
-
-  /* MODAL */
-  #modal {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-  }
-  #modal.active {
-    display: flex;
-  }
-  #modal-content {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    color: #4b2a74;
-    box-shadow: 0 0 25px #6a53b5cc;
-    position: relative;
-  }
-  #modal-content h3 {
-    margin-bottom: 12px;
-    color: #6a53b5;
-  }
-  #modal-content p {
-    font-size: 1.1rem;
-    line-height: 1.4;
-  }
-  #modal-close {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #6a53b5;
-    cursor: pointer;
-    border: none;
-    background: none;
-  }
-  #modal-close:hover, #modal-close:focus {
-    color: #d99bf5;
-    outline: none;
-  }
-
-  /* === VÍDEO EMBUTIDO === */
-  #video-section {
-    text-align: center;
-  }
-  #video-section iframe {
-    width: 100%;
-    max-width: 700px;
-    height: 400px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #b89eee88;
-  }
-
-  /* === CURIOSIDADES === */
-  #curiosidades {
-    background: #f0e6fa;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: inset 0 0 20px #d6c5f7cc;
-  }
-  #curiosidades p {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    color: #4b2a74;
-  }
-
-  /* === CONCLUSÃO === */
-  #conclusao {
-    font-size: 1.2rem;
-    padding: 25px;
-    color: #6a53b5;
-    border-top: 3px solid #d99bf5;
-  }
-
-  /* === RODAPÉ === */
-  footer {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #6a53b5;
-    padding: 20px 0;
-    border-top: 1px solid #d99bf5;
-    background: #faf6ff;
-  }
-
-  /* RESPONSIVO */
-  @media (max-width: 600px) {
+    /* CAPA FIXA TOPO */
     header {
-      padding: 20px 15px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(90deg, #8e44ad, #3498db);
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+      z-index: 9999;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 5px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+    }
+    header p {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-top: 3px;
+      font-style: italic;
+    }
+
     main {
-      padding: 15px 10px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
     }
-    h2 {
-      font-size: 1.5rem;
+
+    /* SEÇÕES */
+    section {
+      margin-bottom: 40px;
+      background: white;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
     }
-    #descricaoGrafico1 {
+
+    section h2 {
+      color: #6a1b9a;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+    }
+
+    /* TEXTOS DA INTRODUÇÃO E DESIGUALDADE */
+    #introducao p,
+    #desigualdade p {
+      margin-bottom: 15px;
+      font-size: 1.12rem;
+      text-align: justify;
+      color: #333;
+    }
+
+    /* GRÁFICO 1 */
+    #grafico1 {
+      text-align: center;
+    }
+
+    #grafico1 canvas {
+      max-width: 100%;
+      height: 400px !important;
+      margin-bottom: 15px;
+    }
+
+    #grafico1 div {
+      margin-bottom: 15px;
+    }
+
+    #grafico1 button {
+      background: #8e44ad;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px 7px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+    #grafico1 button:hover {
+      background: #6a1b9a;
+    }
+
+    #explicacaoGrafico {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #4a148c;
+      margin-top: 12px;
+      min-height: 50px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* MAPA */
+    #mapa iframe {
+      width: 100%;
+      height: 450px;
+      border: 2px solid #8e44ad;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* GRÁFICO 2 */
+    #grafico2 {
+      text-align: center;
+    }
+
+    #grafico2 canvas {
+      max-width: 100%;
+      height: 350px !important;
+    }
+
+    /* TABELA MERCADO DE TRABALHO */
+    #tabelaJovens table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+
+    #tabelaJovens th, #tabelaJovens td {
+      border: 1px solid #ddd;
+      padding: 12px 10px;
+      text-align: center;
       font-size: 1rem;
     }
-    #video-section iframe {
-      height: 250px;
+
+    #tabelaJovens thead th {
+      background: #8e44ad;
+      color: white;
+      font-weight: 700;
     }
-  }
-</style>
+
+    #tabelaJovens tbody tr:nth-child(even) {
+      background: #f3e5f5;
+    }
+
+    #tabelaJovens p {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #6a1b9a;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* GALERIA DE IMAGENS */
+    #galeria {
+      text-align: center;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    figure {
+      background: #faf8fe;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(134, 77, 178, 0.15);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+    figure:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(134, 77, 178, 0.3);
+    }
+
+    figure img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    figcaption {
+      font-weight: 700;
+      color: #6a1b9a;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    details {
+      font-size: 0.95rem;
+      color: #333;
+      text-align: left;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      cursor: pointer;
+      padding-left: 10px;
+    }
+
+    details[open] {
+      max-height: 150px;
+      padding-top: 5px;
+    }
+
+    details summary {
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      margin-bottom: 5px;
+      color: #8e44ad;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* CURIOSIDADES */
+    #curiosidades ul {
+      max-width: 600px;
+      margin: 0 auto;
+      list-style-type: square;
+      padding-left: 20px;
+      color: #5e35b1;
+      font-size: 1.1rem;
+    }
+    #curiosidades li {
+      margin-bottom: 12px;
+    }
+
+    /* CONCLUSÃO */
+    #conclusao p {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #4a148c;
+      text-align: justify;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* RODAPÉ */
+    footer {
+      text-align: center;
+      font-size: 0.95rem;
+      padding: 20px 10px;
+      color: #8e44ad;
+      border-top: 1px solid #ddd;
+      margin-top: 60px;
+      font-style: italic;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 680px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      section h2 {
+        font-size: 1.6rem;
+      }
+      #grafico1 button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+      figure img {
+        height: 140px;
+      }
+    }
+
+  </style>
+
 </head>
 <body>
 
-<header>
-  <h1>Capacidade: Resistir e Florescer</h1>
-  <p>Sara Souza - Colégio Estadual Professora Edith - Junho de 2025</p>
-</header>
+  <!-- CAPA FIXA -->
+  <header>
+    <h1>Capacidade: Resistir e Florescer</h1>
+    <p>Sara Souza - Colégio Estadual Professora Edith</p>
+    <p>Junho de 2025</p>
+  </header>
 
-<main>
+  <main>
 
-  <!-- INTRODUÇÃO -->
-  <section id="introducao" tabindex="0">
-    <h2>Introdução</h2>
-    <p>A capacidade de resistir e florescer nasce da força do campo e da cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas sim as pessoas. Gente que rala todos os dias, que acorda cedo, enfrenta sol, ônibus lotado, enxada na mão, ou as contas na mente. Que vive com pouco, mas resiste com muito.</p>
-    <p>Este portfólio quer dar voz a essas pessoas que muitas vezes são invisíveis. Que trabalham de sol a sol no campo, de segunda a segunda na cidade, tentando crescer sem ter as mesmas chances. Gente que enfrenta a desigualdade, mas não abaixa a cabeça. Que tem coragem, criatividade e força.</p>
-    <p>Quero que quem leia este projeto enxergue além do concreto ou da terra batida. Veja a interdependência entre o campo e a cidade: o campo alimenta, a cidade distribui; o campo planta, a cidade processa. Um depende do outro. A roça precisa de ferramentas, tecnologia, transporte. A cidade precisa de comida, natureza, raízes.</p>
-    <p>O campo resiste com sua sabedoria popular, com a terra molhada e a colheita que sustenta. A cidade resiste com os gritos nos becos, com as crianças que sonham alto mesmo em lajes apertadas. Ambas florescem em meio às dificuldades, sustentadas por quem tem a capacidade de continuar.</p>
-    <p>Este portfólio é um grito, um poema, uma carta de amor e de luta ao Brasil real. É sobre campo e cidade, mas é, sobretudo, sobre gente. Gente que resiste. Gente que floresce.</p>
-  </section>
+    <!-- INTRODUÇÃO -->
+    <section id="introducao">
+      <h2>Introdução</h2>
+      <p>A capacidade de resistir e florescer nasce da força do campo e da cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas sim as pessoas. Gente que rala todos os dias, que acorda cedo, enfrenta sol, ônibus lotado, enxada na mão, ou as contas na mente. Que vive com pouco, mas resiste com muito.</p>
+      <p>Este portfólio quer dar voz a essas pessoas que muitas vezes são invisíveis. Que trabalham de sol a sol no campo, de segunda a segunda na cidade, tentando crescer sem ter as mesmas chances. Gente que enfrenta a desigualdade, mas não abaixa a cabeça. Que tem coragem, criatividade e força.</p>
+      <p>Quero que quem leia este projeto enxergue além do concreto ou da terra batida. Veja a interdependência entre o campo e a cidade: o campo alimenta, a cidade distribui; o campo planta, a cidade processa. Um depende do outro. A roça precisa de ferramentas, tecnologia, transporte. A cidade precisa de comida, natureza, raízes.</p>
+      <p>O campo resiste com sua sabedoria popular, com a terra molhada e a colheita que sustenta. A cidade resiste com os gritos nos becos, com as crianças que sonham alto mesmo em lajes apertadas. Ambas florescem em meio às dificuldades, sustentadas por quem tem a capacidade de continuar.</p>
+      <p>Este portfólio é um grito, um poema, uma carta de amor e de luta ao Brasil real. É sobre campo e cidade, mas é, sobretudo, sobre gente. Gente que resiste. Gente que floresce.</p>
+    </section>
 
-  <!-- DESIGUALDADE -->
-  <section id="desigualdade" tabindex="0">
-    <h2>Desigualdade: Campo e Cidade</h2>
-    <p>Desigualdade não tem um endereço fixo. Ela nasce onde a oportunidade não chega, onde quem acorda cedo e luta todo santo dia, recebe no fim do mês o mínimo — um salário que mal paga o aluguel e não cobre nem o que colocar no prato.</p>
-    <p>Ela mora onde o esforço não traz respeito, e muito menos reconhecimento. Onde o talento é silenciado pela falta de acesso, pela ausência de apoio, pela distância da chance que nunca chega.</p>
-    <p>Ela vive nas esquinas da cidade grande, nos corredores abafados, nas fábricas, nas filas de emprego que nunca andam, que deixam a esperança suada, em pé, sem resposta.</p>
-    <p>Tem gente que levanta antes do sol nascer, encara dois ônibus lotados, enfrenta o calor, o barulho, o corre. Trabalha o dia inteiro limpando, carregando, vendendo, e mesmo assim o salário não cobre nem o básico. Vive para trabalhar, mas não trabalha para viver. Faz hora extra e não ganha reconhecimento. Estuda à noite até a madrugada, com internet de escada — ainda por cima fraca — que mal carrega uma página. Com o corpo cansado do trabalho, mas com o sonho aceso no peito. Mesmo invisível, segue lutando por uma vaga, uma chance, um futuro.</p>
-    <p>No campo, a terra é vasta, mas a estrutura é pouca. Tem criança que caminha quilômetros até a escola, quando consegue chegar — às vezes a escola fica na cidade vizinha, mas falta transporte, falta estrada. Tem criança que atravessa o barro, o riacho descalça, chega suada, suja, cansada, e muitas vezes não tem aula.</p>
-    <p>Tem criança que larga o caderno não por escolha, mas por necessidade. Troca os estudos pela enxada, para ajudar os pais na roça, para garantir o que comer em casa, para manter a mesa posta — mesmo sem salário.</p>
-    <p>Ainda assim, no campo há fartura vinda da terra, comida plantada com as próprias mãos, amor colhido no quintal da família. Tem mãe que leva a marmita com carinho até o milharal para o marido não parar no meio da linha. Tem pai que ensina a plantar desde pequeno, como quem ensina a resistir. Ali, a união é força. O trabalho é vida.</p>
-    <p>E no meio disso tudo, existe também a favela. Não como símbolo exclusivo da desigualdade, mas como mais um retrato dela. Onde falta espaço, lazer, saneamento, mas sobra talento, coragem, música e arte. Onde a luta é diária, mas o brilho nos olhos não se apaga.</p>
-    <p>A cidade concentra hospitais, universidades, empregos. Mas a desigualdade mora nos detalhes que ninguém vê: na mochila pesada do entregador, na roupa encharcada do ambulante que cruza bairros para vender um saco de balas, e ainda assim voltar para casa com pouco. Na diarista que anda quilômetros a pé, com o pé latejando e o coração firme, acreditando que, no fim do mês, vai conseguir colocar comida na mesa da família.</p>
-    <p>Tem gente que carrega a cidade nas costas — que limpa os prédios, serve o café, cuida dos filhos dos outros — e mesmo assim é mal vista, esquecida.</p>
-    <p>Enquanto alguns nascem com tudo pronto, com tudo de mão beijada, outros nascem com pressa — pressa de crescer, de trabalhar, de ajudar em casa, porque a fome não espera o futuro chegar.</p>
-    <p>A desigualdade pinta o rosto de todas as cores. Ela mora no bolso vazio, no estômago que aperta, na geladeira que só tem água e silêncio. Ela mora na lágrima contida, de quem não pode parar nem para chorar, porque precisa levantar cedo e continuar lutando.</p>
-    <p>No campo ou na cidade, resistir é um ato de coragem. E florescer, mesmo com pouco, é um grito de força no peito de quem luta todo santo dia — porque onde há resistência, há também a esperança de transformar o mundo.</p>
-  </section>
+    <!-- DESIGUALDADE -->
+    <section id="desigualdade">
+      <h2>Desigualdade: Campo e Cidade</h2>
+      <p>Desigualdade não tem um endereço fixo. Ela nasce onde a oportunidade não chega, onde quem acorda cedo e luta todo santo dia, recebe no fim do mês o mínimo — um salário que mal paga o aluguel e não cobre nem o que colocar no prato.</p>
+      <p>Ela mora onde o esforço não traz respeito, e muito menos reconhecimento. Onde o talento é silenciado pela falta de acesso, pela ausência de apoio, pela distância da chance que nunca chega.</p>
+      <p>Ela vive nas esquinas da cidade grande, nos corredores abafados, nas fábricas, nas filas de emprego que nunca andam, que deixam a esperança suada, em pé, sem resposta.</p>
+      <p>Tem gente que levanta antes do sol nascer, encara dois ônibus lotados, enfrenta o calor, o barulho, o corre. Trabalha o dia inteiro limpando, carregando, vendendo, e mesmo assim o salário não cobre nem o básico. Vive para trabalhar, mas não trabalha para viver. Faz hora extra e não ganha reconhecimento. Estuda à noite até a madrugada, com internet de escada — ainda por cima fraca — que mal carrega uma página. Com o corpo cansado do trabalho, mas com o sonho aceso no peito. Mesmo invisível, segue lutando por uma vaga, uma chance, um futuro.</p>
+      <p>No campo, a terra é vasta, mas a estrutura é pouca. Tem criança que caminha quilômetros até a escola, quando consegue chegar — às vezes a escola fica na cidade vizinha, mas falta transporte, falta estrada. Tem criança que atravessa o barro, o riacho descalça, chega suada, suja, cansada, e muitas vezes não tem aula.</p>
+      <p>Tem criança que larga o caderno não por escolha, mas por necessidade. Troca os estudos pela enxada, para ajudar os pais na roça, para garantir o que comer em casa, para manter a mesa posta — mesmo sem salário.</p>
+      <p>Ainda assim, no campo há fartura vinda da terra, comida plantada com as próprias mãos, amor colhido no quintal da família. Tem mãe que leva a marmita com carinho até o milharal para o marido não parar no meio da linha. Tem pai que ensina a plantar desde pequeno, como quem ensina a resistir. Ali, a união é força. O trabalho é vida.</p>
+      <p>E no meio disso tudo, existe também a favela. Não como símbolo exclusivo da desigualdade, mas como mais um retrato dela. Onde falta espaço, lazer, saneamento, mas sobra talento, coragem, música e arte. Onde a luta é diária, mas o brilho nos olhos não se apaga.</p>
+      <p>A cidade concentra hospitais, universidades, empregos. Mas a desigualdade mora nos detalhes que ninguém vê: na mochila pesada do entregador, na roupa encharcada do ambulante que cruza bairros para vender um saco de balas, e ainda assim voltar para casa com pouco. Na diarista que anda quilômetros a pé, com o pé latejando e o coração firme, acreditando que, no fim do mês, vai conseguir colocar comida na mesa da família.</p>
+      <p>Tem gente que carrega a cidade nas costas — que limpa os prédios, serve o café, cuida dos filhos dos outros — e mesmo assim é mal vista, esquecida.</p>
+      <p>Enquanto alguns nascem com tudo pronto, com tudo de mão beijada, outros nascem com pressa — pressa de crescer, de trabalhar, de ajudar em casa, porque a fome não espera o futuro chegar.</p>
+      <p>A desigualdade pinta o rosto de todas as cores. Ela mora no bolso vazio, no estômago que aperta, na geladeira que só tem água e silêncio. Ela mora na lágrima contida, de quem não pode parar nem para chorar, porque precisa levantar cedo e continuar lutando.</p>
+      <p>No campo ou na cidade, resistir é um ato de coragem. E florescer, mesmo com pouco, é um grito de força no peito de quem luta todo santo dia — porque onde há resistência, há também a esperança de transformar o mundo.</p>
+    </section>
 
-  <!-- GRÁFICO 1 - BARRAS INTERATIVO -->
-  <section id="grafico1" tabindex="0">
-    <h2>Gráfico 1: Desigualdades entre Campo e Cidade</h2>
-    <div class="barra" tabindex="0" data-info="Internet: 85% da população na cidade tem acesso, mas apenas 45% no campo. A conexão no campo é mais lenta e instável.">
-      Internet <span class="percent">85%</span>
-    </div>
-    <div class="barra" tabindex="0" data-info="Renda média: A renda média mensal na cidade é 2,5 vezes maior que a do campo, dificultando o acesso a bens e serviços.">
-      Renda média <span class="percent">250%</span>
-    </div>
-    <div class="barra" tabindex="0" data-info="Transporte público: 70% dos moradores da cidade dependem do transporte público lotado, enquanto no campo o acesso é precário e distante.">
-      Transporte público <span class="percent">70%</span>
-    </div>
-    <div class="barra" tabindex="0" data-info="Desemprego: A taxa de desemprego na cidade é de 12%, mas no campo chega a 18%, afetando a estabilidade das famílias.">
-      Desemprego <span class="percent">12%</span>
-    </div>
-    <div class="barra" tabindex="0" data-info="Educação: 90% das crianças na cidade frequentam escola regularmente, enquanto no campo essa taxa cai para 65% devido à distância e infraestrutura.">
-      Educação <span class="percent">90%</span>
-    </div>
-    <div class="barra" tabindex="0" data-info="Saúde: Acesso a unidades básicas de saúde é 80% na cidade e 50% no campo, refletindo na qualidade do atendimento.">
-      Saúde <span class="percent">80%</span>
-    </div>
-    <div class="barra" tabindex="0" data-info="Saneamento: 85% dos domicílios na cidade têm saneamento básico, contra 40% no campo, aumentando riscos sanitários.">
-      Saneamento <span class="percent">85%</span>
-    </div>
+    <!-- GRÁFICO 1 -->
+    <section id="grafico1">
+      <h2>Gráfico 1: Desigualdades entre Campo e Cidade</h2>
+      <canvas id="barChart" aria-label="Gráfico de barras com dados comparativos" role="img"></canvas>
+      <div>
+        <button onclick="mostrarExplicacao('internet')">Internet</button>
+        <button onclick="mostrarExplicacao('renda')">Renda Média</button>
+        <button onclick="mostrarExplicacao('transporte')">Transporte Público</button>
+        <button onclick="mostrarExplicacao('desemprego')">Desemprego</button>
+        <button onclick="mostrarExplicacao('educacao')">Educação</button>
+        <button onclick="mostrarExplicacao('saude')">Saúde</button>
+        <button onclick="mostrarExplicacao('saneamento')">Saneamento</button>
+      </div>
+      <div id="explicacaoGrafico" aria-live="polite"></div>
+    </section>
 
-    <div id="descricaoGrafico1" aria-live="polite" aria-atomic="true" role="region" tabindex="0">
-      Passe o mouse ou use TAB + Enter em uma barra para ver a descrição detalhada aqui.
-    </div>
-  </section>
+    <!-- MAPA -->
+    <section id="mapa">
+      <h2>Mapa Interativo: Região do Projeto</h2>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14670.657855827497!2d-47.91450749202722!3d-15.826953936625521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a3b45a87274f5%3A0xe5d6bf83967c47de!2sCol%C3%A9gio%20Estadual%20Professora%20Edith!5e0!3m2!1spt-BR!2sbr!4v1687288736089!5m2!1spt-BR!2sbr"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Localização do Colégio Estadual Professora Edith"
+      ></iframe>
+    </section>
 
-  <!-- MAPA INTERATIVO -->
-  <section id="mapa" tabindex="0">
-    <h2>Mapa Interativo: Região do Projeto</h2>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.893796622675!2d-46.65414708443696!3d-23.56445378467469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59e4520a3e8d%3A0x678aa7c6a86f97f0!2sCol%C3%A9gio%20Estadual%20Professora%20Edith!5e0!3m2!1spt-BR!2sbr!4v1687321761234!5m2!1spt-BR!2sbr"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="Mapa do Colégio Estadual Professora Edith">
-    </iframe>
-  </section>
+    <!-- GRÁFICO 2 -->
+    <section id="grafico2">
+      <h2>Gráfico 2: Clima e Meio Ambiente</h2>
+      <canvas id="lineChart" aria-label="Gráfico de linhas sobre clima e meio ambiente" role="img"></canvas>
+    </section>
 
-  <!-- GRÁFICO 2 - REDONDO (PIE CHART) -->
-  <section id="grafico2" tabindex="0">
-    <h2>Gráfico 2: Clima e Meio Ambiente</h2>
-    <canvas id="pieChart" aria-label="Gráfico circular mostrando porcentagens sobre clima e meio ambiente" role="img"></canvas>
-  </section>
+    <!-- TABELA MERCADO DE TRABALHO JOVENS -->
+    <section id="tabelaJovens">
+      <h2>Mercado de Trabalho para Jovens (2020-2025)</h2>
+      <table>
+        <thead>
+          <tr><th>Ano</th><th>Jovens Empregados (%)</th><th>Desemprego (%)</th><th>Desistência Escolar (%)</th><th>Atividades Informais (%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2020</td><td>45</td><td>22</td><td>12</td><td>38</td></tr>
+          <tr><td>2021</td><td>47</td><td>20</td><td>10</td><td>36</td></tr>
+          <tr><td>2022</td><td>50</td><td>18</td><td>9</td><td>35</td></tr>
+          <tr><td>2023</td><td>52</td><td>15</td><td>8</td><td>34</td></tr>
+          <tr><td>2024</td><td>54</td><td>14</td><td>7</td><td>32</td></tr>
+          <tr><td>2025</td><td>57</td><td>13</td><td>6</td><td>30</td></tr>
+        </tbody>
+      </table>
+      <p>Os dados mostram melhorias graduais, com redução no desemprego jovem e evasão escolar, mas altos índices de informalidade ainda preocupam.</p>
+    </section>
 
-  <!-- TABELA INTERATIVA - Mercado de Trabalho Jovem -->
-  <section id="tabelaJovens" tabindex="0">
-    <h2>Mercado de Trabalho para Jovens</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Ano</th>
-          <th>Jovens Empregados (%)</th>
-          <th>Desemprego (%)</th>
-          <th>Desistência Escolar (%)</th>
-          <th>Atividades Informais (%)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>2020</td>
-          <td>45</td>
-          <td>22</td>
-          <td>12</td>
-          <td>38</td>
-        </tr>
-        <tr>
-          <td>2021</td>
-          <td>47</td>
-          <td>20</td>
-          <td>10</td>
-          <td>36</td>
-        </tr>
-        <tr>
-          <td>2022</td>
-          <td>50</td>
-          <td>18</td>
-          <td>9</td>
-          <td>35</td>
-        </tr>
-        <tr>
-          <td>2023</td>
-          <td>52</td>
-          <td>15</td>
-          <td>8</td>
-          <td>34</td>
-        </tr>
-        <tr>
-          <td>2024</td>
-          <td>54</td>
-          <td>14</td>
-          <td>7</td>
-          <td>32</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+    <!-- GALERIA DE IMAGENS -->
+    <section id="galeria">
+      <h2>Galeria de Fotos: Campo e Cidade</h2>
+      <div class="galeria">
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60" alt="Plantação no campo verde" />
+          <figcaption>Plantação no Campo</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Reflete a importância da agricultura na economia rural.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=800&q=60" alt="Trabalhador rural com enxada" />
+          <figcaption>Trabalhador Rural</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Representa o esforço diário dos agricultores familiares.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=60" alt="Crianças caminhando para a escola no campo" />
+          <figcaption>Crianças indo à Escola</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Dificuldade de acesso à educação no meio rural.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60" alt="Rua movimentada na cidade" />
+          <figcaption>Rua movimentada na Cidade</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Mostra o ritmo intenso da vida urbana.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=800&q=60" alt="Transporte público lotado na cidade" />
+          <figcaption>Transporte Público Lotado</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Demonstra os desafios diários do trabalhador urbano.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=60" alt="Favela com arte e cultura" />
+          <figcaption>Favela e Comunidade</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>A força cultural e criativa das comunidades periféricas.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1522199670076-2852f80289c8?auto=format&fit=crop&w=800&q=60" alt="Crianças brincando em laje na cidade" />
+          <figcaption>Crianças na Cidade</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Infância urbana em cenários desafiadores.</p>
+          </details>
+        </figure>
+        <figure tabindex="0">
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=60" alt="Diferenças entre campo e cidade" />
+          <figcaption>Diferenças Campo e Cidade</figcaption>
+          <details>
+            <summary>Ver mais</summary>
+            <p>Contraste entre estilos de vida e condições.</p>
+          </details>
+        </figure>
+      </div>
+    </section>
 
-  <!-- GALERIA DE FOTOS -->
-  <section id="galeria" tabindex="0">
-    <h2>Galeria de Fotos: Campo e Cidade</h2>
-    <!-- Cada figure com imagem, nome e descrição no modal -->
-    <figure tabindex="0" data-title="Plantação no Campo" data-desc="Campo vasto com plantações verdes, que sustenta famílias e a economia local.">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Plantação no campo verde" />
-      <figcaption>Plantação no Campo</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Trabalhador Rural" data-desc="Trabalhador com enxada na mão, símbolo da resistência no campo.">
-      <img src="https://images.unsplash.com/photo-1516811277814-4e621e7886bc?auto=format&fit=crop&w=400&q=80" alt="Trabalhador rural com enxada" />
-      <figcaption>Trabalhador Rural</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Crianças indo à Escola" data-desc="Crianças caminhando muitos quilômetros para estudar no campo, enfrentando dificuldades.">
-      <img src="https://images.unsplash.com/photo-1504595403659-9088ce801e29?auto=format&fit=crop&w=400&q=80" alt="Crianças caminhando para a escola no campo" />
-      <figcaption>Crianças indo à Escola</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Rua movimentada na Cidade" data-desc="Rua cheia de pessoas e veículos, retratando o ritmo acelerado da cidade.">
-      <img src="https://images.unsplash.com/photo-1468071174046-657d9d351a40?auto=format&fit=crop&w=400&q=80" alt="Rua movimentada na cidade" />
-      <figcaption>Rua movimentada na Cidade</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Transporte Público Lotado" data-desc="Ônibus cheio, comum no dia a dia dos moradores da cidade.">
-      <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Transporte público lotado na cidade" />
-      <figcaption>Transporte Público Lotado</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Favela e Comunidade" data-desc="Comunidade onde a desigualdade se manifesta, mas também existe muita cultura e arte.">
-      <img src="https://images.unsplash.com/photo-1565372915788-3706e2e140c8?auto=format&fit=crop&w=400&q=80" alt="Favela com arte e cultura" />
-      <figcaption>Favela e Comunidade</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Crianças na Cidade" data-desc="Crianças brincando em uma laje, símbolo de esperança urbana.">
-      <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80" alt="Crianças brincando em laje na cidade" />
-      <figcaption>Crianças na Cidade</figcaption>
-    </figure>
-    <figure tabindex="0" data-title="Diferenças entre Campo e Cidade" data-desc="Imagem comparativa mostrando as diferenças entre modos de vida e infraestrutura do campo e da cidade.">
-      <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=80" alt="Diferenças entre campo e cidade" />
-      <figcaption>Diferenças Campo e Cidade</figcaption>
-    </figure>
-  </section>
+    <!-- CURIOSIDADES -->
+    <section id="curiosidades">
+      <h2>Curiosidades</h2>
+      <ul>
+        <li>Mais de 80% da população brasileira vive em áreas urbanas.</li>
+        <li>O campo produz cerca de 65% dos alimentos consumidos no Brasil.</li>
+        <li>Nas áreas rurais, o acesso à internet ainda é limitado em muitas regiões.</li>
+      </ul>
+    </section>
 
-  <!-- VÍDEO -->
-  <section id="video-section" tabindex="0">
-    <h2>Vídeo: Capacidade de Resistir e Florescer</h2>
-    <iframe src="https://www.youtube.com/embed/ZvwW_4De2LE" title="Vídeo sobre resistência e florescimento no campo e cidade" frameborder="0" allowfullscreen></iframe>
-  </section>
+    <!-- CONCLUSÃO -->
+    <section id="conclusao">
+      <h2>Conclusão</h2>
+      <p>Ao longo deste portfólio, foi possível refletir sobre os desafios enfrentados pelas populações do campo e da cidade. A desigualdade é uma realidade presente, mas também é evidente a força e a capacidade de resistência dessas pessoas. Com dados, imagens e análises, vimos que é possível transformar realidades com políticas públicas, investimentos em educação e oportunidades iguais. O futuro só floresce onde há respeito e justiça para todos.</p>
+    </section>
 
-  <!-- CURIOSIDADES -->
-  <section id="curiosidades" tabindex="0">
-    <h2>Curiosidades</h2>
-    <p>Você sabia que o Brasil é o 3º maior produtor mundial de alimentos? Grande parte dessa produção vem do campo, sustentando tanto o mercado interno quanto as exportações.</p>
-    <p>Apesar das dificuldades, o campo brasileiro tem sido palco de muitas inovações tecnológicas que ajudam a aumentar a produtividade e preservar o meio ambiente.</p>
-    <p>Nas cidades, a diversidade cultural cresce a cada dia, trazendo novas formas de expressão artística, culinária e música que refletem a mistura de diferentes povos e histórias.</p>
-  </section>
+  </main>
 
-  <!-- CONCLUSÃO -->
-  <section id="conclusao" tabindex="0">
-    <h2>Conclusão</h2>
-    <p>A resistência e o florescimento são mais do que palavras — são ações diárias de milhões de pessoas que vivem no campo e na cidade. Embora enfrentem desigualdades e dificuldades, elas continuam lutando, sonhando e construindo um Brasil melhor.</p>
-    <p>Este trabalho é uma homenagem à força dessas pessoas e à interdependência fundamental entre o campo e a cidade. Com conhecimento e união, podemos contribuir para um futuro mais justo e sustentável para todos.</p>
-  </section>
+  <footer>
+    <p>&copy; 2025 Sara Souza - Colégio Estadual Professora Edith</p>
+  </footer>
 
-</main>
-
-<footer>
-  &copy; 2025 Sara Souza - Colégio Estadual Professora Edith
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  // GRÁFICO 1 - Atualizar descrição ao clicar/teclar nas barras
-  const barras = document.querySelectorAll('#grafico1 .barra');
-  const descricao = document.getElementById('descricaoGrafico1');
-
-  barras.forEach(barra => {
-    barra.addEventListener('click', () => {
-      descricao.textContent = barra.getAttribute('data-info');
-    });
-    barra.addEventListener('keypress', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        descricao.textContent = barra.getAttribute('data-info');
-      }
-    });
-  });
-
-  // GRÁFICO 2 - PIE CHART (clima e meio ambiente)
-  const ctx = document.getElementById('pieChart').getContext('2d');
-  const pieChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Áreas Verdes', 'Poluição', 'Temperatura Média', 'Recursos Naturais'],
-      datasets: [{
-        label: 'Fatores Ambientais (%)',
-        data: [45, 30, 15, 10],
-        backgroundColor: ['#6a53b5', '#d99bf5', '#a86bd6', '#4b2a74'],
-        hoverOffset: 30,
-        borderWidth: 2,
-        borderColor: '#faf6ff'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {color: '#6a53b5', font: {size: 14}}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Gráfico 1 - Barras comparando Campo x Cidade
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Internet', 'Renda Média', 'Transporte Público', 'Desemprego', 'Educação', 'Saúde', 'Saneamento'],
+        datasets: [
+          {
+            label: 'Cidade (%)',
+            data: [85, 250, 70, 12, 90, 80, 85],
+            backgroundColor: '#8e44ad'
+          },
+          {
+            label: 'Campo (%)',
+            data: [45, 100, 30, 18, 65, 50, 40],
+            backgroundColor: '#3498db'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 300
+          }
         },
-        tooltip: {
-          callbacks: {
-            label: ctx => ctx.label + ': ' + ctx.parsed + '%'
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+            mode: 'index',
+            intersect: false,
           }
         }
       }
+    });
+
+    function mostrarExplicacao(item) {
+      const explicacoes = {
+        internet: 'Acesso à internet é maior na cidade, com 85%, enquanto no campo é apenas 45%.',
+        renda: 'A renda média é mais alta nas cidades devido às oportunidades de trabalho formal.',
+        transporte: 'O transporte público é mais presente nas cidades, apesar dos problemas de lotação.',
+        desemprego: 'No campo, o desemprego chega a 18%, maior que os 12% das cidades.',
+        educacao: 'A cidade oferece mais escolas e universidades, com acesso a 90% da população.',
+        saude: 'A cobertura de saúde é superior nas áreas urbanas, com 80% contra 50% no campo.',
+        saneamento: 'O saneamento básico cobre 85% nas cidades e 40% nas zonas rurais.'
+      };
+      document.getElementById('explicacaoGrafico').textContent = explicacoes[item];
     }
-  });
 
-  // GALERIA DE FOTOS - Modal
-  const galeria = document.getElementById('galeria');
-  const modal = document.getElementById('modal') || createModal();
-  const modalContent = modal.querySelector('#modal-content');
-  const modalTitle = document.createElement('h3');
-  const modalText = document.createElement('p');
-  const modalCloseBtn = document.createElement('button');
-
-  function createModal() {
-    const m = document.createElement('div');
-    m.id = 'modal';
-    m.setAttribute('role', 'dialog');
-    m.setAttribute('aria-modal', 'true');
-    m.innerHTML = `
-      <div id="modal-content" tabindex="0">
-        <button id="modal-close" aria-label="Fechar modal">×</button>
-      </div>
-    `;
-    document.body.appendChild(m);
-    return m;
-  }
-
-  // Inicializa modal elementos
-  modalContent.appendChild(modalTitle);
-  modalContent.appendChild(modalText);
-  modalCloseBtn.id = 'modal-close';
-  modalCloseBtn.innerHTML = '×';
-  modalCloseBtn.setAttribute('aria-label', 'Fechar modal');
-  modalContent.appendChild(modalCloseBtn);
-
-  // Abrir modal com conteúdo da imagem
-  galeria.querySelectorAll('figure').forEach(figure => {
-    figure.addEventListener('click', () => openModal(figure));
-    figure.addEventListener('keypress', e => {
-      if(e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal(figure);
+    // Gráfico 2 - Linha clima e meio ambiente (exemplo com dados fictícios)
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctxLine, {
+      type: 'line',
+      data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+        datasets: [
+          {
+            label: 'Temperatura Média (°C)',
+            data: [25.1, 25.3, 25.5, 26.0, 26.2, 26.3, 26.5, 26.7],
+            borderColor: '#8e44ad',
+            backgroundColor: 'rgba(142, 68, 173, 0.3)',
+            tension: 0.4,
+            fill: true,
+            pointRadius: 5
+          },
+          {
+            label: 'Índice de Chuvas (mm)',
+            data: [1000, 980, 1100, 1050, 1030, 1005, 990, 970],
+            borderColor: '#3498db',
+            backgroundColor: 'rgba(52, 152, 219, 0.3)',
+            tension: 0.3,
+            fill: true,
+            pointRadius: 5
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            suggestedMin: 20,
+            suggestedMax: 1100
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
+          },
+          tooltip: {
+            enabled: true
+          }
+        }
       }
     });
-  });
 
-  function openModal(figure) {
-    modalTitle.textContent = figure.getAttribute('data-title');
-    modalText.textContent = figure.getAttribute('data-desc');
-    modal.classList.add('active');
-    modalContent.focus();
-  }
-
-  modalCloseBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
-  modal.addEventListener('click', e => {
-    if(e.target === modal) modal.classList.remove('active');
-  });
-  document.addEventListener('keydown', e => {
-    if(e.key === 'Escape') modal.classList.remove('active');
-  });
-
-</script>
+  </script>
 
 </body>
 </html>

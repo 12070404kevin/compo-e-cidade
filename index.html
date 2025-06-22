@@ -1,198 +1,527 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
-
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacidade: Resistir e Florescer</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capacidade: Resistir e Florescer - Campo e Cidade</title>
 
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f9f7fc;
+      color: #3b2e5a;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    /* Cores principais */
+    :root {
+      --roxo-lilas: #7e5bef;
+      --rosa: #f48fb1;
+      --verde-azulado: #4db6ac;
+      --lilas-claro: #c3bef0;
+      --texto-escuro: #2b2346;
+      --fundo-capa: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+      --cor-botoes: var(--roxo-lilas);
+    }
+    /* Capa */
+    header.capa {
+      background: var(--fundo-capa);
+      border-radius: 15px;
+      padding: 50px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 15px rgba(126, 91, 239, 0.3);
+    }
+    /* Folhas decorativas topo */
+    header.capa::before,
+    header.capa::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: url('https://i.imgur.com/OXkV3F9.png') no-repeat center/contain;
+      opacity: 0.15;
+      top: -50px;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
+      pointer-events: none;
+    }
+    header.capa::before {
+      left: -50px;
+      transform: rotate(-15deg);
+    }
+    header.capa::after {
+      right: -50px;
+      top: auto;
+      bottom: -50px;
+      transform: rotate(25deg);
+    }
+    header.capa h1 {
+      font-size: 3.2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255 255 255 / 0.6);
+    }
+    header.capa p {
+      font-size: 1.4rem;
+      margin: 10px 0;
+      font-weight: 500;
+    }
+    header.capa .detalhes {
+      margin-top: 30px;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #ece7f3cc;
+    }
+    /* Container principal */
+    main.container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px 40px 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+    /* Títulos seções */
+    main.container h2 {
+      margin-top: 40px;
+      color: var(--roxo-lilas);
+      border-bottom: 3px solid var(--roxo-lilas);
+      padding-bottom: 8px;
+      font-size: 2rem;
+    }
+    main.container p {
+      margin: 18px 0;
+      font-size: 1.1rem;
+      color: var(--texto-escuro);
+    }
+    /* Gráfico de colunas */
+    .grafico-container {
+      margin-top: 30px;
+      margin-bottom: 50px;
+      padding: 15px;
+      background: var(--lilas-claro);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(126,91,239,0.2);
+    }
+    .grafico {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 300px;
+      padding: 0 10px;
+      gap: 12px;
+    }
+    .barra {
+      flex: 1;
+      margin: 0 6px;
+      background: var(--roxo-lilas);
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .barra:hover {
+      background-color: var(--rosa);
+    }
+    .barra span.altura {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+    /* Tooltip */
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--verde-azulado);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      user-select: none;
+      margin-bottom: 8px;
+      z-index: 10;
+    }
+    .barra:hover .tooltip {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* Tabela mercado de trabalho */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: center;
+      font-size: 1rem;
+    }
+    table th {
+      background-color: var(--roxo-lilas);
+      color: white;
+      font-weight: 600;
+    }
+    /* Imagens com botões */
+    .imagens-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+      gap: 30px;
+    }
+    .imagem-botao {
+      position: relative;
+      width: 45%;
+      max-width: 430px;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(126,91,239,0.25);
+      transition: transform 0.3s;
+      background: #fafafa;
+    }
+    .imagem-botao:hover {
+      transform: scale(1.05);
+    }
+    .imagem-botao img {
+      width: 100%;
+      display: block;
+      border-radius: 15px 15px 0 0;
+    }
+    .info-texto {
+      padding: 15px 20px;
+      background: var(--lilas-claro);
+      color: var(--texto-escuro);
+      font-size: 1rem;
+      font-weight: 500;
+      height: 120px;
+      overflow-y: auto;
+    }
+    /* Botões para acesso projeto */
+    .botoes-acesso {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+    .botao {
+      background: var(--roxo-lilas);
+      color: white;
+      padding: 14px 26px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      box-shadow: 0 6px 12px rgba(126, 91, 239, 0.7);
+      transition: background-color 0.3s;
+    }
+    .botao:hover {
+      background: var(--rosa);
+      color: #fff;
+    }
+    /* Conclusão */
+    .conclusao {
+      background: var(--lilas-claro);
+      padding: 25px 30px;
+      border-radius: 15px;
+      color: var(--texto-escuro);
+      font-size: 1.15rem;
+      box-shadow: 0 4px 12px rgba(126,91,239,0.2);
+      margin-bottom: 60px;
+    }
+    /* Scroll na info das imagens */
+    .info-texto::-webkit-scrollbar {
+      width: 6px;
+    }
+    .info-texto::-webkit-scrollbar-thumb {
+      background-color: var(--roxo-lilas);
+      border-radius: 10px;
+    }
+  </style>
+</head>
 <body>
-  <!-- 1. CAPA -->
-  <header class="capa" style="background-color: #d100c9; color: white; padding: 20px; text-align: center;">
-    <h1 style="font-size: 3em;">Capacidade: Resistir e Florescer</h1>
-    <h2>Colégio Estadual Professora Edith</h2>
-    <h3>Autora: Sara Souza</h3>
-    <p>Data: Junho de 2025</p>
+  <header class="capa">
+    <h1>Capacidade: Resistir e Florescer</h1>
+    <p>Projeto Agrinho - Tema: Campo e Cidade</p>
+    <p class="detalhes">Sara d Souza | Colégio Estadual Professora Edith | 2025 | Entrega: 22 de junho</p>
   </header>
 
-  <!-- 2. PÚBLICO-ALVO -->
-  <section class="publico-alvo">
-    <h2>Público-Alvo</h2>
-    <p>Este portfólio foi criado para o projeto Agrinho, com o objetivo de refletir sobre as diferenças entre o campo e a cidade. Além disso, pode abrir portas para oportunidades futuras na área de tecnologia, comunicação ou pesquisa.</p>
-  </section>
+  <main class="container">
 
-  <!-- 3. INTRODUÇÃO -->
-  <section class="introducao">
-    <h2>Introdução</h2>
-    <p>Este portfólio foi desenvolvido como parte do projeto Agrinho, abordando as diferenças e relações entre o campo e a cidade. O objetivo é analisar de forma crítica e sensível os contrastes sociais, culturais e ambientais entre esses dois espaços.</p>
-  </section>
+    <!-- Introdução completa -->
+    <section id="introducao">
+      <h2>Introdução</h2>
+      <p>
+        A capacidade de resistir e florescer nasce na força no campo e na cidade. Escolhi esse tema porque acredito que o que mais define a vida nesses lugares não são os prédios ou plantações, mas se as pessoas, gente que rala todos os dias, que acorda cedo e preta sol, ônibus lotado, enxada na mão ou as contas na mente, que vive com pouco, mas resiste com muito.
+      </p>
+      <p>
+        Esse portfólio quer dar voz a essas pessoas que muitas vezes são invisíveis, que trabalham de sol a sol no campo, de segunda a segunda na cidade, tentando crescer sem ter as mesmas chances, gente que enfrenta a desigualdade, mas não abaixa a cabeça, que tem coragem, criatividade e força.
+      </p>
+      <p>
+        Quero que quem leia esse projeto enxergue além do concreto ou da terra batida. Veja a interdependência entre o campo e a cidade. O campo alimenta a cidade distribuída. O campo planta. A cidade processa. Um depende do outro. A roça precisa de ferramentas, tecnologia, transporte. A cidade precisa de comida, natureza e raízes.
+      </p>
+      <p>
+        O campo resiste com sua sabedoria popular, com a terra molhada e a colheita que sustenta. A cidade resiste com gritos nos becos, com as crianças que sonham alto, mesmo sem lajes emocionantes. Ambas florescem em meio às dificuldades sustentadas por quem tem capacidade de continuar.
+      </p>
+      <p>
+        Esse portfólio é um grito, um poema, uma carta de amor, de luta ao Brasil real. É sobre campo e cidade, mas é sobretudo sobre gente. Gente que resiste, gente que floresce.
+      </p>
+    </section>
 
-  <!-- 4. TEXTO 2 – DESIGUALDADE -->
-  <section class="desigualdade">
-    <h2>Desigualdade no Campo e na Cidade</h2>
-    <p>[Texto já aprovado por você sobre desigualdade – manter aqui]</p>
-  </section>
+    <!-- Texto 2: Desigualdade no campo e na cidade -->
+    <section id="desigualdade">
+      <h2>Desigualdade no Campo e na Cidade</h2>
+      <p>
+        A desigualdade não tem um endereço fixo. Ela nasce onde a oportunidade não chega. Onde quem acorda cedo e luta todo santo dia recebe no fim do mês o mínimo. Um salário que mal paga o aluguel e não cobre nenhum que coloca no prato.
+      </p>
+      <p>
+        Ela mora onde o esforço não traz respeito e muito menos reconhecimento. O talento é silenciado pela falta de acesso, pela ausência de apoio, pela distância da chance que nunca chega.
+      </p>
+      <p>
+        Ela vive nas esquinas da cidade grande, nos corredores abafados, nas fábricas, nas filas de emprego que nunca andam. Que deixam a esperança suada, em pé, sem resposta. Tem gente que se levanta antes do sol nascer, enfrenta dores desconhecidas, enfrenta o calor, o barulho, corre, trabalha o dia inteiro limpando, carregando, levando, devendo, vendendo. Mesmo assim o salário não cobre nem o básico. Vive para trabalhar, mas não trabalha para viver. Faz hora extra e não ganha reconhecimento. Estuda à noite até de madrugada com internet instável. Ainda por cima a fraca que mal carrega uma página. Com o corpo cansado, eu trabalho, mas com o sonho aceso no peito.
+      </p>
+      <p>
+        Mesmo invisível, segue lutando por uma vaga, uma chance no futuro.
+      </p>
+      <p>
+        No campo a terra é vasta, mas a estrutura é pouca. Tem criança que caminha quilômetros até a escola. Quando consegue chegar, às vezes a escola fica na cidade vizinha, mas falta transporte, falta estrada. Tem criança que atravessa o barro, o riacho descalça. Chega suada, suja, cansada e muitas vezes não tem aula. Tem criança que larga o caderno não por escolha, mas por necessidade. Troca os estudos pela enxada para ajudar os pais na roça. Para garantir o que come em casa, para manter a mesa posta, mesmo sem salário.
+      </p>
+      <p>
+        Ainda assim no campo, a futura vinda da terra, comida plantada com as próprias mãos. Amor colhido no quintal da família. Tem mãe que leva marmita com carinho até o milharal, para o marido não parar no meio da linha. Tem pai que ensina a plantar desde pequeno, quem ensina a resistir. Ali a união é força, o trabalho é vida.
+      </p>
+      <p>
+        E no meio disso tudo existe também uma favela, não como símbolo exclusivo de desigualdade, mas com mais um retrato dela. Onde falta espaço, lazer e saneamento, mas cobra talento, coragem, música e arte. Onde a luta é diária, mas o brilho nos olhos não se apaga.
+      </p>
+      <p>
+        A cidade é conceito hospital, universidade, emprego, mas a desigualdade mora nos estalhos que ninguém vê. Na mochila pesada do entregador, na roupa recheada do ambulante que cruza bairros para vender um saco de balas. E ainda assim voltar para casa com pouco. Na diarista que anda quilômetros a pé, com o pé atrasado e o coração firme. Acreditando que no fim do mês vai conseguir colocar comida na mesa da família.
+      </p>
+      <p>
+        Tem gente que carrega a cidade nas costas, que limpa os prédios, serve o café, cuida dos filhos dos outros, e mesmo assim é mal vista e esquecida. Enquanto alguns nascem com tudo pronto, com tudo de mão beijada, outros nascem com pressa, presa de crescer, de trabalhar, de ajudar em casa, porque a fome não espera o futuro chegar.
+      </p>
+      <p>
+        A desigualdade pinta o rosto de todas as cores. Ela mora no bolso vazio, no estômago que aperta, na geladeira que só tem água e silêncio. Ela mora na lágrima contida de quem não pode parar, nem para chorar, porque precisa levantar a ceia e continuar lutando. No caminho ou na cidade resistir é um ato de coragem, e florescer, mesmo com pouco, é um grito de força no peito de quem luta todo santo dia, porque onde há resistência, há também esperança de transformar o mundo.
+      </p>
+    </section>
 
-  <!-- 5. TEXTO SOBRE A CIDADE -->
-  <section class="cidade">
-    <h2>A Realidade Urbana</h2>
-    <p>A cidade oferece oportunidades de estudo, acesso à tecnologia, saúde e lazer. No entanto, também carrega desigualdade, poluição e correria. O brilho da cidade muitas vezes esconde o cansaço e a pressa de quem luta diariamente para sobreviver nela.</p>
-  </section>
+    <!-- Texto só sobre a cidade -->
+    <section id="cidade">
+      <h2>A Vida na Cidade</h2>
+      <p>
+        A cidade pulsa com sua energia incessante, seus prédios, ruas movimentadas e diversidade cultural. O centro urbano é um lugar de oportunidades, mas também de desafios diários. Transporte público cheio, poluição, falta de áreas verdes e o ritmo acelerado afetam a qualidade de vida.
+      </p>
+      <p>
+        A cidade prejudica o campo quando consome seus recursos sem devolver investimentos ou apoio suficientes. Muitas vezes, o crescimento urbano desordenado invade áreas rurais, diminuindo espaços para produção agrícola e alterando ecossistemas.
+      </p>
+      <p>
+        Contudo, a cidade pode melhorar seu papel investindo em tecnologias sustentáveis, valorizando a cultura do campo, facilitando o escoamento da produção rural e promovendo políticas que garantam acesso igualitário à educação, saúde e emprego para todos.
+      </p>
+      <p>
+        A integração entre campo e cidade é vital para o desenvolvimento equilibrado, onde ambos se beneficiam e crescem juntos.
+      </p>
+    </section>
 
-  <!-- 6. TEXTO SOBRE O CAMPO -->
-  <section class="campo">
-    <h2>A Vida no Campo</h2>
-    <p>No campo, a rotina é mais ligada à natureza. A agricultura, a simplicidade e os valores da terra mostram uma forma de vida diferente. Porém, a distância dos centros urbanos dificulta o acesso à educação, saúde e oportunidades. Ainda assim, o campo resiste com dignidade e beleza.</p>
-  </section>
+    <!-- Texto só sobre o campo -->
+    <section id="campo">
+      <h2>A Vida no Campo</h2>
+      <p>
+        O campo é marcado pela tranquilidade da natureza, a vastidão da terra e a riqueza das tradições. No entanto, a vida rural enfrenta dificuldades como falta de infraestrutura adequada, acesso limitado a serviços públicos, educação e saúde, além de transporte precário.
+      </p>
+      <p>
+        O campo pode contribuir para a cidade com a produção de alimentos, recursos naturais e preservação ambiental. Porém, a falta de apoio tecnológico e financeiro limita seu potencial.
+      </p>
+      <p>
+        Para melhorar, o campo precisa de investimentos em estradas, escolas, internet de qualidade e assistência técnica. Isso fortalece a economia rural, garantindo que o campo seja parceiro ativo no desenvolvimento regional.
+      </p>
+      <p>
+        Uma relação justa e respeitosa entre campo e cidade promove sustentabilidade, qualidade de vida e oportunidades para todos.
+      </p>
+    </section>
 
-  <!-- 7. GRÁFICO 1 – DESIGUALDADE CAMPO E CIDADE -->
-  <section class="grafico">
-    <h2>Comparativo de Desigualdade</h2>
-    <canvas id="grafico1"></canvas>
-    <script>
-      const ctx = document.getElementById('grafico1').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Educação', 'Saúde', 'Internet', 'Renda', 'Saneamento', 'Transporte'],
-          datasets: [
-            {
-              label: 'Campo',
-              data: [3, 4, 2, 3, 2, 2],
-              backgroundColor: 'rgba(75, 192, 192, 0.6)'
-            },
-            {
-              label: 'Cidade',
-              data: [8, 9, 9, 8, 7, 8],
-              backgroundColor: 'rgba(153, 102, 255, 0.6)'
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            tooltip: {
-              enabled: true
-            },
-            legend: {
-              position: 'top'
-            },
-            title: {
-              display: true,
-              text: 'Desigualdade entre Campo e Cidade em Diversos Aspectos'
-            }
-          }
-        }
-      });
-    </script>
-  </section>
+    <!-- Gráfico de colunas com indicadores do campo e da cidade -->
+    <section id="grafico-indicadores">
+      <h2>Indicadores do Campo e da Cidade</h2>
+      <div class="grafico-container" aria-label="Gráfico de indicadores do campo e da cidade">
+        <div class="grafico">
+          <!-- Cada barra é uma coluna -->
+          <div class="barra" style="height: 70%;" tabindex="0" aria-describedby="tooltip1">
+            <span class="altura">70%</span>
+            <div class="tooltip" id="tooltip1">Educação no Campo: 70%</div>
+          </div>
+          <div class="barra" style="height: 85%;" tabindex="0" aria-describedby="tooltip2">
+            <span class="altura">85%</span>
+            <div class="tooltip" id="tooltip2">Educação na Cidade: 85%</div>
+          </div>
+          <div class="barra" style="height: 40%;" tabindex="0" aria-describedby="tooltip3">
+            <span class="altura">40%</span>
+            <div class="tooltip" id="tooltip3">Internet no Campo: 40%</div>
+          </div>
+          <div class="barra" style="height: 90%;" tabindex="0" aria-describedby="tooltip4">
+            <span class="altura">90%</span>
+            <div class="tooltip" id="tooltip4">Internet na Cidade: 90%</div>
+          </div>
+          <div class="barra" style="height: 55%;" tabindex="0" aria-describedby="tooltip5">
+            <span class="altura">55%</span>
+            <div class="tooltip" id="tooltip5">Saúde no Campo: 55%</div>
+          </div>
+          <div class="barra" style="height: 80%;" tabindex="0" aria-describedby="tooltip6">
+            <span class="altura">80%</span>
+            <div class="tooltip" id="tooltip6">Saúde na Cidade: 80%</div>
+          </div>
+          <div class="barra" style="height: 35%;" tabindex="0" aria-describedby="tooltip7">
+            <span class="altura">35%</span>
+            <div class="tooltip" id="tooltip7">Transporte no Campo: 35%</div>
+          </div>
+          <div class="barra" style="height: 75%;" tabindex="0" aria-describedby="tooltip8">
+            <span class="altura">75%</span>
+            <div class="tooltip" id="tooltip8">Transporte na Cidade: 75%</div>
+          </div>
+          <div class="barra" style="height: 30%;" tabindex="0" aria-describedby="tooltip9">
+            <span class="altura">30%</span>
+            <div class="tooltip" id="tooltip9">Emprego no Campo: 30%</div>
+          </div>
+          <div class="barra" style="height: 70%;" tabindex="0" aria-describedby="tooltip10">
+            <span class="altura">70%</span>
+            <div class="tooltip" id="tooltip10">Emprego na Cidade: 70%</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- 8. TABELA – DIA DE TRABALHO DOS JOVENS -->
-  <section class="tabela-jovens">
-    <h2>Tabela: Dia de Trabalho dos Jovens</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Atividade</th>
-          <th>Campo</th>
-          <th>Cidade</th>
-          <th>Observações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Início do dia</td>
-          <td>5h</td>
-          <td>6h</td>
-          <td>Campo exige trabalho mais cedo, ligado à agricultura</td>
-        </tr>
-        <tr>
-          <td>Estudo</td>
-          <td>À tarde</td>
-          <td>Manhã</td>
-          <td>Horários diferentes por causa da rotina de trabalho</td>
-        </tr>
-        <tr>
-          <td>Trabalho</td>
-          <td>Na roça/família</td>
-          <td>Estágio ou comércio</td>
-          <td>Campo tem vínculo familiar, cidade é mais formal</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+    <!-- Tabela mercado de trabalho dos jovens -->
+    <section id="tabela-mercado">
+      <h2>Mercado de Trabalho dos Jovens no Campo e na Cidade (2020-2025)</h2>
+      <table aria-describedby="tabela-descricao">
+        <caption id="tabela-descricao">Tabela com dados do mercado de trabalho dos jovens de 2020 a 2025, comparando campo e cidade.</caption>
+        <thead>
+          <tr>
+            <th>Ano</th>
+            <th>Jovens no Campo (%)</th>
+            <th>Jovens na Cidade (%)</th>
+            <th>Desemprego no Campo (%)</th>
+            <th>Desemprego na Cidade (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2020</td><td>45</td><td>60</td><td>15</td><td>18</td></tr>
+          <tr><td>2021</td><td>42</td><td>63</td><td>14</td><td>17</td></tr>
+          <tr><td>2022</td><td>44</td><td>65</td><td>13</td><td>16</td></tr>
+          <tr><td>2023</td><td>46</td><td>66</td><td>12</td><td>15</td></tr>
+          <tr><td>2024</td><td>47</td><td>68</td><td>11</td><td>14</td></tr>
+          <tr><td>2025</td><td>48</td><td>69</td><td>10</td><td>13</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-  <!-- 9. GRÁFICO 2 – CLIMA E MEIO AMBIENTE (ORIGINAL) -->
-  <section class="grafico2">
-    <h2>Condições Ambientais</h2>
-    <canvas id="graficoClima"></canvas>
-    <script>
-      const clima = document.getElementById('graficoClima').getContext('2d');
-      new Chart(clima, {
-        type: 'bar',
-        data: {
-          labels: ['Poluição', 'Água Limpa', 'Verde', 'Lixo'],
-          datasets: [
-            {
-              label: 'Campo',
-              data: [2, 9, 10, 2],
-              backgroundColor: 'rgba(54, 162, 235, 0.6)'
-            },
-            {
-              label: 'Cidade',
-              data: [9, 4, 3, 8],
-              backgroundColor: 'rgba(255, 99, 132, 0.6)'
-            }
-          ]
-        },
-        options: {
-          plugins: {
-            title: {
-              display: true,
-              text: 'Comparativo Ambiental entre Campo e Cidade'
-            },
-            tooltip: {
-              enabled: true
-            }
-          }
-        }
-      });
-    </script>
-  </section>
+    <!-- Realidade urbana -->
+    <section id="realidade-urbana">
+      <h2>Realidade Urbana</h2>
+      <p>
+        A cidade é um lugar de diversidade cultural e econômica, mas enfrenta problemas como violência, poluição, e desigualdade social. As oportunidades são maiores, porém não iguais para todos.
+      </p>
+      <p>
+        Muitos jovens enfrentam dificuldades para acessar empregos dignos, educação de qualidade e serviços básicos. O ritmo acelerado da cidade traz estresse e limitações para a qualidade de vida.
+      </p>
+    </section>
 
-  <!-- 10. IMAGENS -->
-  <section class="imagens">
-    <h2>Imagens</h2>
-    <div class="galeria">
-      <p>[Aguardando envio das 4 imagens: 2 campo, 2 cidade]</p>
+    <!-- Realidade rural -->
+    <section id="realidade-rural">
+      <h2>Realidade Rural</h2>
+      <p>
+        O campo oferece contato direto com a natureza e a produção de alimentos, mas sofre com a falta de infraestrutura, serviços básicos, transporte e acesso à tecnologia.
+      </p>
+      <p>
+        Jovens rurais têm menos oportunidades para formação, empregos e lazer, e frequentemente precisam migrar para a cidade em busca de melhores condições de vida.
+      </p>
+    </section>
+
+    <!-- Gráfico climográfico original -->
+    <section id="grafico-clima">
+      <h2>
+<!-- Imagens e botões com explicações -->
+<section id="imagens-explicativas">
+  <h2>Imagens do Campo e da Cidade</h2>
+  <div class="imagens-container">
+    <div class="imagem-botao">
+      <img src="https://i.imgur.com/UFyF0BI.jpg" alt="Milharal no campo" />
+      <div class="info-texto">Milharal - Representa a força da agricultura familiar.</div>
     </div>
-  </section>
+    <div class="imagem-botao">
+      <img src="https://i.imgur.com/oXoeGHc.jpg" alt="Trabalho rural" />
+      <div class="info-texto">Família na roça - Trabalho coletivo e resistência.</div>
+    </div>
+    <div class="imagem-botao">
+      <img src="https://i.imgur.com/WFskry2.jpg" alt="Cidade à noite" />
+      <div class="info-texto">Cidade noturna - Agitação e desigualdade urbana.</div>
+    </div>
+    <div class="imagem-botao">
+      <img src="https://i.imgur.com/gI0bVEa.jpg" alt="Trabalho urbano" />
+      <div class="info-texto">Trabalhador urbano - Luta diária pelo sustento.</div>
+    </div>
+  </div>
+</section>
 
-  <!-- 11. TABELA DO IBGE -->
-  <section class="tabela-ibge">
-    <h2>Dados do IBGE</h2>
-    <p>[Conteúdo mantido conforme trabalho original - inserir aqui ou manter como está]</p>
-  </section>
+<!-- Tabela IBGE -->
+<section id="tabela-ibge">
+  <h2>Dados IBGE 2020-2025</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Ano</th>
+        <th>População Rural (%)</th>
+        <th>População Urbana (%)</th>
+        <th>Acesso à Internet Rural (%)</th>
+        <th>Acesso à Internet Urbana (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2020</td><td>18</td><td>82</td><td>35</td><td>92</td></tr>
+      <tr><td>2021</td><td>17.5</td><td>82.5</td><td>40</td><td>93</td></tr>
+      <tr><td>2022</td><td>17</td><td>83</td><td>42</td><td>94</td></tr>
+      <tr><td>2023</td><td>16.5</td><td>83.5</td><td>45</td><td>95</td></tr>
+      <tr><td>2024</td><td>16</td><td>84</td><td>47</td><td>96</td></tr>
+      <tr><td>2025</td><td>15.5</td><td>84.5</td><td>50</td><td>97</td></tr>
+    </tbody>
+  </table>
+</section>
 
-  <!-- 12. LINKS FINAIS -->
-  <section class="links">
-    <h2>Acesse o Projeto</h2>
-    <ul>
-      <li><a href="#">Ver no GitHub</a></li>
-      <li><a href="#">Ver no Canva</a></li>
-      <li><a href="#">Ver no Figma</a></li>
-      <li><a href="#">Baixar PDF</a></li>
-    </ul>
-  </section>
+<!-- Conclusão -->
+<section class="conclusao">
+  <h2>Conclusão</h2>
+  <p>
+    Campo e cidade vivem realidades distintas, mas são complementares. A resistência está em cada trabalhador rural, em cada estudante urbano, em cada mãe, em cada jovem que sonha. Este projeto é uma homenagem à força de quem vive com coragem, seja onde for. É uma semente de reflexão, luta e esperança. Que floresça!
+  </p>
+</section>
 
-  <!-- 13. CONCLUSÃO -->
-  <section class="conclusao">
-    <h2>Conclusão</h2>
-    <p>Estou criando este portfólio como parte do projeto Agrinho, e confesso que foi uma experiência muito interessante. Desde o início, achei legal a ideia de desenvolver algo tão completo, que unisse pesquisa, criatividade e aprendizado. Além de cumprir o objetivo do projeto, percebi que esse trabalho me ajudou a aprender muito mais. Entendi como funciona a programação, como criar códigos e montar um site do zero. Foi desafiador, mas também muito gratificante ver tudo tomando forma. Criar esse portfólio me fez enxergar novas possibilidades. Quem sabe, no futuro, eu possa seguir por esse caminho, desenvolver mais projetos como este ou até mesmo encontrar uma profissão nessa área. Gostei bastante dessa experiência. Me senti capaz de fazer algo grande, bonito e cheio de significado. E talvez, com esse trabalho, eu possa conquistar oportunidades importantes lá na frente.</p>
-  </section>
-</body>
-
-</html>
+<!-- Botões de acesso ao projeto -->
+<section class="botoes-acesso">
+  <a href="https://github.com/seuusuario/Capacidade-Resistir-Florescer" class="botao" target="_blank">GitHub</a>
+  <a href="https://figma.com/projeto-campo-cidade" class="botao" target="_blank">Figma</a>
+  <a href="projeto.pdf" class="botao" download>PDF</a>
+  <a href="#capa" class="botao">Topo</a>
+</section>

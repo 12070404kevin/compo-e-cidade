@@ -1,500 +1,792 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Capacidade: Resistir e Florescer - Projeto Agrinho</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Capacidade: Resistir e Florescer - Projeto Agrinho</title>
+<style>
+  /* Reset simples */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: #f9f7fc;
+    color: #333;
+  }
+  header, main, footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 4px solid #8b4fc6; /* Roxo vibrante */
+  }
+  h1 {
+    color: #8b4fc6;
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+  }
+  h2 {
+    color: #6a2c91;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #d19fff;
+    padding-bottom: 0.3rem;
+  }
+  p {
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+  .highlight {
+    color: #a04cff;
+    font-weight: 600;
+  }
 
-  <!-- Bootstrap CSS (versão 5.3) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  /* Seções texto resumido */
+  .resumo {
+    background: #eae0fa;
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
 
-  <!-- Google Fonts (opcional, para um visual mais bonito) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  /* Gráfico barras */
+  .grafico {
+    margin: 2rem 0;
+  }
+  .grafico h3 {
+    text-align: center;
+    color: #4b1e83;
+    margin-bottom: 0.5rem;
+  }
+  .barra-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 250px;
+    gap: 1rem;
+    margin: 0 auto 2rem;
+    max-width: 700px;
+  }
+  .barra {
+    width: 80px;
+    background: #a04cff;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .barra:hover {
+    background: #6a2c91;
+  }
+  .barra span {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #4b1e83;
+  }
+  .barra-label {
+    text-align: center;
+    font-weight: 700;
+    color: #6a2c91;
+    margin-top: 0.3rem;
+  }
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #fef7fb;
-      color: #3a3a3a;
-      padding-top: 20px;
-      padding-bottom: 40px;
+  /* Mapa embed */
+  .mapa {
+    margin: 2rem 0;
+    text-align: center;
+  }
+  iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 12px;
+  }
+
+  /* Galeria */
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .imagem-botao {
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgb(160 76 255 / 0.5);
+    transition: transform 0.3s ease;
+    background: #f0e7ff;
+  }
+  .imagem-botao:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 14px rgb(160 76 255 / 0.8);
+  }
+  .imagem-botao svg {
+    width: 100%;
+    height: 150px;
+    display: block;
+  }
+  .imagem-botao p {
+    text-align: center;
+    padding: 0.6rem 0.2rem 1rem;
+    font-weight: 600;
+    color: #4b1e83;
+    background: #e0d5ff;
+    margin: 0;
+  }
+
+  /* Modal */
+  .modal-bg {
+    display: none;
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  .modal-bg.active {
+    display: flex;
+  }
+  .modal-conteudo {
+    background: #fff;
+    max-width: 500px;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 25px #7b4fce;
+    position: relative;
+  }
+  .modal-conteudo h4 {
+    color: #6a2c91;
+    margin-top: 0;
+  }
+  .modal-conteudo p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+  }
+  .modal-close {
+    position: absolute;
+    top: 8px; right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #6a2c91;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 3px solid #a04cff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  /* Responsividade */
+  @media (max-width: 600px) {
+    .barra-container {
+      height: 180px;
     }
-    header, footer {
-      background-color: #7a4d94;
-      color: white;
-      padding: 15px 0;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 1.2px;
+    .imagem-botao svg {
+      height: 120px;
     }
-    h1, h2, h3 {
-      color: #5c2a72;
-    }
-    /* Estilo dos botões das imagens (botão = imagem clicável) */
-    .btn-img {
-      border: none;
-      padding: 0;
-      background: none;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .btn-img:hover,
-    .btn-img:focus {
-      transform: scale(1.05);
-      outline: none;
-      box-shadow: 0 0 8px #9f5de2;
-    }
-    .img-caption {
-      margin-top: 5px;
-      font-size: 0.9rem;
-      color: #65407f;
-      font-weight: 600;
-    }
-    /* Container das imagens para espaçamento */
-    .gallery-row {
-      margin-bottom: 40px;
-    }
-    /* Modal header cores diferentes por tema */
-    .modal-header.bg-purple {
-      background-color: #7a4d94;
-    }
-    .modal-header.bg-blue {
-      background-color: #4a75a8;
-    }
-    .modal-header.bg-green {
-      background-color: #3b8e5e;
-    }
-    /* Estilo do gráfico */
-    #grafico {
-      max-width: 100%;
-      height: 400px;
-      margin-bottom: 40px;
-    }
-    /* Links visuais */
-    a {
-      color: #8a50b8;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    /* Responsividade extra */
-    @media (max-width: 576px) {
-      .img-caption {
-        font-size: 0.8rem;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
 <header>
-  Projeto Agrinho - Capacidade: Resistir e Florescer
+  <h1>Capacidade: Resistir e Florescer</h1>
+  <p><strong>Projeto Agrinho – Campo e Cidade</strong></p>
+  <p>Colégio Estadual Professora Edith</p>
 </header>
 
-<main class="container mt-4 mb-5">
-
-  <!-- 1. Capa -->
-  <section id="capa" class="text-center mb-5">
-    <h1>Capacidade: Resistir e Florescer</h1>
-    <h3>Colégio Estadual Professora Edith</h3>
-    <p><em>Projeto Agrinho 2025</em></p>
-  </section>
-
-  <!-- 2. Introdução -->
-  <section id="introducao" class="mb-5">
+<main>
+  <section>
     <h2>Introdução</h2>
-    <p>
-      A capacidade de resistir e florescer nasce da força do campo e da cidade.  
-      Apesar das diferenças, ambos os espaços são fundamentais para o desenvolvimento social,  
-      cultural e econômico do Brasil. Neste projeto, exploraremos essas diferenças e semelhanças,  
-      analisando os desafios e oportunidades que moldam a vida nas áreas rurais e urbanas.
-    </p>
+    <p>A capacidade de resistir e florescer nasce da força do campo e da cidade. Cada ambiente traz seus desafios, belezas e modos de vida únicos, mas ambos são fundamentais para o desenvolvimento e sustentabilidade do Brasil. Este projeto busca mostrar a realidade do campo e da cidade, suas desigualdades, belezas e potencialidades, para refletirmos sobre como podemos contribuir para um futuro melhor.</p>
   </section>
 
-  <!-- 3. Texto 2 - Desigualdade no campo e na cidade -->
-  <section id="texto2" class="mb-5">
+  <section>
     <h2>Desigualdade no Campo e na Cidade</h2>
-    <p>
-      As desigualdades entre campo e cidade se manifestam em diversos aspectos, desde o acesso à educação e saúde até infraestrutura e oportunidades econômicas.  
-      No campo, a falta de recursos e a distância dificultam o acesso a serviços essenciais, enquanto na cidade, a desigualdade se revela nas condições de moradia, transporte e mercado de trabalho.  
-      Compreender essas diferenças é essencial para criar políticas eficazes que promovam justiça social e desenvolvimento sustentável.
-    </p>
+    <p>A desigualdade entre campo e cidade é uma realidade que impacta profundamente a vida das pessoas. No campo, faltam muitas vezes oportunidades de trabalho, acesso à saúde, educação de qualidade e infraestrutura adequada. Já na cidade, apesar de mais opções, enfrentam-se problemas como desigualdade social, moradia precária, poluição e trânsito intenso. Essa divisão afeta o desenvolvimento social e econômico e exige ações para diminuir as diferenças.</p>
   </section>
 
-  <!-- 4. Resumo Cidade -->
-  <section id="resumo-cidade" class="mb-5">
+  <section class="resumo">
     <h2>Resumo – Cidade</h2>
     <ul>
-      <li><strong>Pontos positivos:</strong> educação, saúde, cultura, mercado de trabalho.</li>
-      <li><strong>Como a cidade prejudica o campo:</strong> poluição, expansão urbana, consumo de recursos.</li>
-      <li><strong>O que a cidade pode fazer para melhorar:</strong> investimento em sustentabilidade, políticas de inclusão social.</li>
-      <li><strong>Desafios urbanos:</strong> desigualdade, trânsito, moradia inadequada.</li>
+      <li>Pontos positivos: educação, saúde, cultura, mercado de trabalho.</li>
+      <li>Como a cidade prejudica o campo: poluição, expansão urbana descontrolada.</li>
+      <li>O que a cidade pode fazer para melhorar: investir em transporte sustentável, reduzir desigualdades.</li>
+      <li>Desafios urbanos: desigualdade social, violência, falta de espaços verdes.</li>
     </ul>
   </section>
 
-  <!-- 5. Resumo Campo -->
-  <section id="resumo-campo" class="mb-5">
+  <section class="resumo">
     <h2>Resumo – Campo</h2>
     <ul>
-      <li><strong>Pontos positivos:</strong> produção agrícola, preservação ambiental, comunidade próxima.</li>
-      <li><strong>O que o campo prejudica na cidade:</strong> desmatamento, queimadas, uso excessivo de recursos naturais.</li>
-      <li><strong>O que pode melhorar:</strong> acesso à tecnologia, infraestrutura, serviços básicos.</li>
-      <li><strong>Desafios enfrentados:</strong> isolamento, falta de investimento, mudanças climáticas.</li>
+      <li>Pontos positivos: natureza preservada, produção de alimentos, cultura tradicional.</li>
+      <li>O que o campo prejudica na cidade: desmatamento, queimadas, poluição hídrica.</li>
+      <li>O que pode melhorar: acesso à tecnologia, educação, serviços básicos.</li>
+      <li>Desafios enfrentados no campo: isolamento, falta de infraestrutura, baixa renda.</li>
     </ul>
   </section>
 
-  <!-- 6. Gráfico 1 (Mantido) - Exemplo simples -->
-  <section id="grafico1" class="mb-5">
-    <h2>Gráfico 1 – Produção Agrícola no Campo</h2>
-    <img src="img/grafico1-producao-agrícola.png" alt="Gráfico da produção agrícola no campo" class="img-fluid shadow rounded" />
-    <p class="text-muted small mt-2">Fonte: Dados do IBGE 2024.</p>
-  </section>
-
-  <!-- 7. Gráfico 2 – Comparativo Campo x Cidade (Gráfico de Barras Interativo) -->
-  <section id="grafico2" class="mb-5">
-    <h2>Gráfico 2 – Comparativo: Campo x Cidade</h2>
-    <canvas id="grafico" aria-label="Gráfico comparativo de indicadores entre campo e cidade" role="img"></canvas>
-  </section>
-
-  <!-- 8. Mapa Google Maps -->
-  <section id="mapa" class="mb-5">
-    <h2>Mapa – Localização do Campo e da Cidade</h2>
-    <div class="ratio ratio-16x9 shadow rounded">
-      <iframe
-        src="https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID"
-        title="Mapa do Campo e da Cidade"
-        allowfullscreen
-      ></iframe>
+  <section class="grafico">
+    <h3>Gráfico 1 – Dados do Projeto</h3>
+    <div class="barra-container" role="list" aria-label="Gráfico de barras com dados do projeto">
+      <div class="barra" style="height: 180px;" tabindex="0" aria-label="Educação, 75%">
+        <span>75%</span>
+        <div class="barra-label">Educação</div>
+      </div>
+      <div class="barra" style="height: 160px;" tabindex="0" aria-label="Saúde, 67%">
+        <span>67%</span>
+        <div class="barra-label">Saúde</div>
+      </div>
+      <div class="barra" style="height: 140px;" tabindex="0" aria-label="Trabalho, 58%">
+        <span>58%</span>
+        <div class="barra-label">Trabalho</div>
+      </div>
+      <div class="barra" style="height: 200px;" tabindex="0" aria-label="Infraestrutura, 83%">
+        <span>83%</span>
+        <div class="barra-label">Infraestrutura</div>
+      </div>
+      <div class="barra" style="height: 120px;" tabindex="0" aria-label="Cultura, 50%">
+        <span>50%</span>
+        <div class="barra-label">Cultura</div>
+      </div>
     </div>
   </section>
 
-  <!-- 9. Gráfico 3 – Clima e Meio Ambiente -->
-  <section id="grafico3" class="mb-5">
-    <h2>Gráfico 3 – Clima e Meio Ambiente</h2>
-    <img src="img/grafico3-clima-meio-ambiente.png" alt="Gráfico sobre clima e meio ambiente" class="img-fluid shadow rounded" />
-    <p class="text-muted small mt-2">Fonte: Instituto Nacional de Meteorologia (INMET) 2025.</p>
+  <section class="mapa">
+    <h2>Mapa – Localização do Campo e Cidade</h2>
+    <iframe src="https://www.google.com/maps/d/embed?mid=1GJXhKwNsyIzfTJQ1W4xNxoW-Ttd1S9mF&hl=pt-BR" allowfullscreen></iframe>
   </section>
 
-  <!-- 10. Tabela IBGE com botão interativo -->
-  <section id="tabela-ibge" class="mb-5">
-    <h2>Tabela IBGE (2024–2025) – Mercado de Trabalho dos Jovens</h2>
-    <button
-      class="btn btn-primary mb-3"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#detalhesTabela"
-      aria-expanded="false"
-      aria-controls="detalhesTabela"
-    >
-      Mostrar detalhes
-    </button>
-    <div class="collapse" id="detalhesTabela">
-      <table class="table table-bordered table-striped">
-        <thead class="table-purple text-white">
-          <tr>
-            <th>Indicador</th>
-            <th>Campo (%)</th>
-            <th>Cidade (%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Desemprego</td><td>12,5</td><td>15,3</td></tr>
-          <tr><td>Agronegócio</td><td>35,2</td><td>4,8</td></tr>
-          <tr><td>Sucessão Familiar</td><td>45,0</td><td>8,7</td></tr>
-          <tr><td>Economia Rural</td><td>60,1</td><td>10,3</td></tr>
-        </tbody>
-      </table>
-      <p class="small text-muted">Fonte: IBGE 2024–2025.</p>
+  <section class="grafico">
+    <h3>Gráfico 3 – Clima e Meio Ambiente</h3>
+    <div class="barra-container" role="list" aria-label="Gráfico de barras sobre clima e meio ambiente">
+      <div class="barra" style="height: 210px; background: #4caf50;" tabindex="0" aria-label="Preservação ambiental, 88%">
+        <span>88%</span>
+        <div class="barra-label">Preservação ambiental</div>
+      </div>
+      <div class="barra" style="height: 170px; background: #2196f3;" tabindex="0" aria-label="Queimadas, 71%">
+        <span>71%</span>
+        <div class="barra-label">Queimadas</div>
+      </div>
+      <div class="barra" style="height: 130px; background: #ff9800;" tabindex="0" aria-label="Poluição, 52%">
+        <span>52%</span>
+        <div class="barra-label">Poluição</div>
+      </div>
+      <div class="barra" style="height: 90px; background: #f44336;" tabindex="0" aria-label="Expansão urbana, 36%">
+        <span>36%</span>
+        <div class="barra-label">Expansão urbana</div>
+      </div>
     </div>
   </section>
 
-  <!-- 11. Galeria de 8 imagens interativas (botões = imagens) -->
-  <section id="galeria" class="mb-5">
+  <section>
     <h2>Galeria Interativa – Campo e Cidade</h2>
+    <div class="galeria" role="list">
 
-    <div class="row gallery-row">
-      <!-- 3 imagens do campo -->
-      <div class="col-12 col-sm-4 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalMilharal" aria-label="Milharal">
-          <img src="img/milharal.jpg" alt="Milharal no campo" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Milharal</div>
+      <!-- Campo 1 -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Milharal. Clique para ver explicação e curiosidade" data-modal="modal1">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#a7d47c" />
+          <rect y="100" width="200" height="50" fill="#5a8c29" />
+          <circle cx="30" cy="60" r="15" fill="#f7f0c4" />
+          <rect x="25" y="40" width="10" height="40" fill="#726f1f" />
+          <rect x="70" y="80" width="10" height="40" fill="#726f1f" />
+          <circle cx="75" cy="70" r="15" fill="#f7f0c4" />
+          <rect x="70" y="40" width="10" height="40" fill="#726f1f" />
+          <rect x="140" y="60" width="15" height="50" fill="#536c2e" />
+          <circle cx="150" cy="60" r="10" fill="#f7f0c4" />
+          <rect x="140" y="20" width="15" height="40" fill="#536c2e" />
+          <rect x="120" y="30" width="10" height="70" fill="#a1b870" />
+        </svg>
+        <p>Milharal</p>
       </div>
-      <div class="col-12 col-sm-4 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalCampoFlores" aria-label="Campo com flores">
-          <img src="img/campo-flores.jpg" alt="Campo com flores" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Campo com flores</div>
-      </div>
-      <div class="col-12 col-sm-4 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalHomemTrabalhando" aria-label="Homem trabalhando no campo">
-          <img src="img/homem-trabalhando.jpg" alt="Homem trabalhando no campo" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Homem trabalhando no campo</div>
-      </div>
-    </div>
 
-    <div class="row gallery-row">
-      <!-- 3 imagens da cidade -->
-      <div class="col-12 col-sm-4 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalCriancaEscola" aria-label="Criança indo à escola">
-          <img src="img/crianca-escola.jpg" alt="Criança indo à escola" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Criança indo à escola</div>
+      <!-- Campo 2 -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Campo com flores. Clique para ver explicação e curiosidade" data-modal="modal2">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#c9e2a8" />
+          <circle cx="50" cy="70" r="20" fill="#ff9f9f" />
+          <circle cx="55" cy="70" r="15" fill="#fff1f1" />
+          <circle cx="55" cy="70" r="7" fill="#ff4d4d" />
+          <rect x="40" y="90" width="20" height="30" fill="#4a914e" />
+          <circle cx="120" cy="40" r="20" fill="#edc7b7" />
+          <circle cx="115" cy="40" r="15" fill="#f5ebe0" />
+          <circle cx="115" cy="40" r="7" fill="#de9f8f" />
+          <rect x="105" y="50" width="20" height="70" fill="#7f5f53" />
+          <circle cx="160" cy="100" r="15" fill="#ff7d00" />
+          <circle cx="160" cy="100" r="10" fill="#ffbd40" />
+          <rect x="150" y="110" width="20" height="30" fill="#3e773d" />
+        </svg>
+        <p>Campo com flores</p>
       </div>
-      <div class="col-12 col-sm-4 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalRuaMovimentada" aria-label="Rua movimentada com pessoas">
-          <img src="img/rua-movimentada.jpg" alt="Rua movimentada com pessoas" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Rua movimentada</div>
-      </div>
-      <div class="col-12 col-sm-4 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalTransportePublico" aria-label="Transporte público lotado">
-          <img src="img/transporte-publico.jpg" alt="Transporte público lotado" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Transporte público lotado</div>
-      </div>
-    </div>
 
-    <div class="row gallery-row">
-      <!-- 2 imagens comparativas -->
-      <div class="col-12 col-sm-6 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalDesafioCampo" aria-label="Desafio no campo">
-          <img src="img/desafio-campo.jpg" alt="Desafio no campo" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Desafio no campo</div>
+      <!-- Campo 3 -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Homem trabalhando no campo. Clique para ver explicação e curiosidade" data-modal="modal3">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#d2e6af" />
+          <rect x="90" y="60" width="20" height="50" fill="#745c2b" />
+          <circle cx="100" cy="50" r="15" fill="#f0d8b8" />
+          <rect x="80" y="100" width="60" height="10" fill="#4e3a10" />
+          <line x1="110" y1="60" x2="150" y2="40" stroke="#3a2f13" stroke-width="4" />
+          <line x1="110" y1="70" x2="150" y2="90" stroke="#3a2f13" stroke-width="4" />
+        </svg>
+        <p>Homem trabalhando no campo</p>
       </div>
-      <div class="col-12 col-sm-6 text-center mb-4">
-        <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalDesafioCidade" aria-label="Desafio na cidade">
-          <img src="img/desafio-cidade.jpg" alt="Desafio na cidade" class="img-fluid rounded shadow" />
-        </button>
-        <div class="img-caption">Desafio na cidade</div>
-      </div>
-    </div>
 
-    <!-- Modais para as imagens -->
-    <!-- Modal Milharal -->
-    <div class="modal fade" id="modalMilharal" tabindex="-1" aria-labelledby="modalMilharalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-purple text-white">
-            <h5 class="modal-title" id="modalMilharalLabel">Milharal</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>Um milharal representa a força do campo, mostrando a produção agrícola que sustenta a economia e alimenta o país.</p>
-            <p><strong>Curiosidade:</strong> O milho é um dos principais produtos agrícolas do Brasil, usado tanto na alimentação quanto na indústria.</p>
-          </div>
-        </div>
+      <!-- Cidade 1 -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Criança indo à escola com mochila. Clique para ver explicação e curiosidade" data-modal="modal4">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#c1d6f0" />
+          <rect x="60" y="70" width="80" height="50" fill="#5a7ab8" />
+          <rect x="90" y="40" width="30" height="30" fill="#e1a380" />
+          <circle cx="105" cy="30" r="15" fill="#fdd7bb" />
+          <rect x="75" y="120" width="20" height="10" fill="#333" />
+          <rect x="105" y="120" width="20" height="10" fill="#333" />
+        </svg>
+        <p>Criança indo à escola</p>
       </div>
-    </div>
 
-    <!-- Modal Campo com Flores -->
-    <div class="modal fade" id="modalCampoFlores" tabindex="-1" aria-labelledby="modalCampoFloresLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-green text-white">
-            <h5 class="modal-title" id="modalCampoFloresLabel">Campo com flores</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>A natureza tranquila do campo é essencial para o equilíbrio ambiental e a preservação da biodiversidade.</p>
-            <p><strong>Curiosidade:</strong> Muitas flores do campo são usadas para fins medicinais e ornamentais, valorizando a flora local.</p>
-          </div>
-        </div>
+      <!-- Cidade 2 -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Rua movimentada com pessoas. Clique para ver explicação e curiosidade" data-modal="modal5">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#d5e1f2" />
+          <rect x="0" y="100" width="200" height="50" fill="#7b9ed7" />
+          <circle cx="30" cy="90" r="15" fill="#ffc4b1" />
+          <circle cx="60" cy="90" r="15" fill="#d99687" />
+          <circle cx="90" cy="90" r="15" fill="#ffa07a" />
+          <circle cx="120" cy="90" r="15" fill="#ff7f50" />
+          <circle cx="150" cy="90" r="15" fill="#f08c54" />
+          <rect x="80" y="70" width="40" height="20" fill="#e6e7e8" />
+        </svg>
+        <p>Rua movimentada</p>
       </div>
-    </div>
 
-    <!-- Modal Homem Trabalhando no Campo -->
-    <div class="modal fade" id="modalHomemTrabalhando" tabindex="-1" aria-labelledby="modalHomemTrabalhandoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-purple text-white">
-            <h5 class="modal-title" id="modalHomemTrabalhandoLabel">Homem trabalhando no campo</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>A rotina no campo envolve muito esforço físico, sob sol e chuva, destacando a importância do trabalhador rural.</p>
-            <p><strong>Curiosidade:</strong> O trabalho rural é fundamental para a segurança alimentar do país, mesmo diante de desafios climáticos.</p>
-          </div>
-        </div>
+      <!-- Cidade 3 -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Transporte público lotado. Clique para ver explicação e curiosidade" data-modal="modal6">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#acc6e9" />
+          <rect x="40" y="70" width="120" height="50" fill="#3a5999" />
+          <rect x="60" y="110" width="30" height="20" fill="#2a3b6a" />
+          <rect x="110" y="110" width="30" height="20" fill="#2a3b6a" />
+          <circle cx="70" cy="130" r="10" fill="#000" />
+          <circle cx="130" cy="130" r="10" fill="#000" />
+        </svg>
+        <p>Transporte público lotado</p>
       </div>
-    </div>
 
-    <!-- Modal Criança indo à escola -->
-    <div class="modal fade" id="modalCriancaEscola" tabindex="-1" aria-labelledby="modalCriancaEscolaLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-blue text-white">
-            <h5 class="modal-title" id="modalCriancaEscolaLabel">Criança indo à escola</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>A educação na cidade oferece mais opções de escolas e cursos, mas também enfrenta desafios como o transporte e a desigualdade.</p>
-            <p><strong>Curiosidade:</strong> Muitas crianças na cidade dependem do transporte público para conseguir chegar à escola diariamente.</p>
-          </div>
-        </div>
+      <!-- Campo desafio -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Desafio no campo. Clique para ver explicação e curiosidade" data-modal="modal7">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#dce6bc" />
+          <rect x="70" y="70" width="60" height="40" fill="#7f9058" />
+          <rect x="85" y="30" width="15" height="40" fill="#a3b26e" />
+          <rect x="100" y="30" width="15" height="40" fill="#a3b26e" />
+          <circle cx="93" cy="25" r="8" fill="#716b56" />
+          <line x1="120" y1="70" x2="150" y2="100" stroke="#7f9058" stroke-width="5" />
+          <line x1="120" y1="70" x2="90" y2="110" stroke="#7f9058" stroke-width="5" />
+        </svg>
+        <p>Desafio no campo</p>
       </div>
-    </div>
 
-    <!-- Modal Rua movimentada -->
-    <div class="modal fade" id="modalRuaMovimentada" tabindex="-1" aria-labelledby="modalRuaMovimentadaLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-blue text-white">
-            <h5 class="modal-title" id="modalRuaMovimentadaLabel">Rua movimentada</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>As ruas das cidades são marcadas pela diversidade e agitação, refletindo a vida urbana acelerada.</p>
-            <p><strong>Curiosidade:</strong> O trânsito intenso é um dos principais problemas das grandes cidades brasileiras.</p>
-          </div>
-        </div>
+      <!-- Cidade desafio -->
+      <div class="imagem-botao" tabindex="0" role="button" aria-pressed="false" aria-label="Desafio na cidade. Clique para ver explicação e curiosidade" data-modal="modal8">
+        <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect width="200" height="150" fill="#d3d7e1" />
+          <rect x="50" y="80" width="100" height="40" fill="#7c7c7c" />
+          <rect x="80" y="40" width="15" height="40" fill="#9d9d9d" />
+          <rect x="105" y="40" width="15" height="40" fill="#9d9d9d" />
+          <circle cx="87" cy="30" r="8" fill="#6a6a6a" />
+          <line x1="140" y1="80" x2="170" y2="110" stroke="#7c7c7c" stroke-width="5" />
+          <line x1="140" y1="80" x2="110" y2="120" stroke="#7c7c7c" stroke-width="5" />
+        </svg>
+        <p>Desafio na cidade</p>
       </div>
-    </div>
 
-    <!-- Modal Transporte público lotado -->
-    <div class="modal fade" id="modalTransportePublico" tabindex="-1" aria-labelledby="modalTransportePublicoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-blue text-white">
-            <h5 class="modal-title" id="modalTransportePublicoLabel">Transporte público lotado</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>O transporte público é essencial para a mobilidade urbana, mas muitas vezes é insuficiente e lotado.</p>
-            <p><strong>Curiosidade:</strong> Em horários de pico, é comum encontrar ônibus e metrôs superlotados.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Desafio no campo -->
-    <div class="modal fade" id="modalDesafioCampo" tabindex="-1" aria-labelledby="modalDesafioCampoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-green text-white">
-            <h5 class="modal-title" id="modalDesafioCampoLabel">Desafio no campo</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>O campo enfrenta desafios como o isolamento, mudanças climáticas e falta de infraestrutura.</p>
-            <p><strong>Curiosidade:</strong> Muitas comunidades rurais lutam para manter suas tradições e modo de vida frente às dificuldades.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Desafio na cidade -->
-    <div class="modal fade" id="modalDesafioCidade" tabindex="-1" aria-labelledby="modalDesafioCidadeLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-purple text-white">
-            <h5 class="modal-title" id="modalDesafioCidadeLabel">Desafio na cidade</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-          </div>
-          <div class="modal-body">
-            <p>Na cidade, os desafios incluem desigualdade social, poluição e dificuldades no transporte e moradia.</p>
-            <p><strong>Curiosidade:</strong> Grandes cidades brasileiras enfrentam problemas de favelização e acesso limitado a serviços.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- 12. Curiosidades -->
-  <section id="curiosidades" class="mb-5">
-    <h2>Curiosidades – Campo e Cidade</h2>
-    <ul>
-      <li>Você sabia que o Brasil é um dos maiores produtores agrícolas do mundo, graças ao campo?</li>
-      <li>Apesar da vida agitada na cidade, o campo oferece qualidade de vida e contato direto com a natureza.</li>
-      <li>Grandes centros urbanos concentram a maior parte dos serviços de saúde e educação, mas também enfrentam problemas de infraestrutura.</li>
-      <li>A preservação ambiental no campo ajuda a combater as mudanças climáticas que afetam as cidades.</li>
-    </ul>
-  </section>
-
-  <!-- 13. Conclusão -->
-  <section id="conclusao">
-    <h2>Conclusão</h2>
-    <p>
-      Literalmente, entender as diferenças entre campo e cidade é fundamental para construir um futuro mais justo e sustentável.  
-      Realmente, o equilíbrio entre esses espaços depende de políticas eficazes e do esforço de toda a sociedade.  
-      Especificamente, valorizar o trabalho rural e urbano é reconhecer que ambos resistem e florescem, cada um à sua maneira.
-    </p>
-  </section>
+  <footer>
+    <p>Projeto Agrinho - Capacidade: Resistir e Florescer © 2025</p>
+  </footer>
 </main>
 
-<footer>
-  © 2025 Projeto Agrinho – Sara Souza
-</footer>
+<!-- Modal explicações -->
+<div id="modal1" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal1-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal1-title">Milharal</h4>
+    <p>O milharal representa a força da agricultura familiar no campo, responsável pela produção de alimentos que sustentam o Brasil. A colheita exige trabalho árduo e conhecimento tradicional passado de geração em geração.</p>
+  </div>
+</div>
 
-<!-- Bootstrap JS + Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div id="modal2" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal2-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal2-title">Campo com flores</h4>
+    <p>A beleza natural do campo é marcada por suas flores e a preservação do meio ambiente, mostrando que é possível conciliar produção agrícola com sustentabilidade e equilíbrio ecológico.</p>
+  </div>
+</div>
 
-<!-- Chart.js para o gráfico -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div id="modal3" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal3-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal3-title">Homem trabalhando no campo</h4>
+    <p>O trabalhador rural enfrenta desafios diários, como sol forte, chuva e esforço físico intenso para garantir a produção de alimentos e a manutenção da cultura local.</p>
+  </div>
+</div>
+
+<div id="modal4" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal4-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal4-title">Criança indo à escola</h4>
+    <p>A educação na cidade oferece oportunidades e desafios, representados pela criança com mochila indo para a escola em meio à correria urbana.</p>
+  </div>
+</div>
+
+<div id="modal5" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal5-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal5-title">Rua movimentada</h4>
+    <p>A vida na cidade é acelerada, com ruas cheias de pessoas, trânsito e movimento constante, trazendo desafios para a mobilidade e qualidade de vida urbana.</p>
+  </div>
+</div>
+
+<div id="modal6" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal6-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal6-title">Transporte público lotado</h4>
+    <p>O transporte público é um desafio urbano constante, com ônibus lotados e longos tempos de espera, impactando a vida diária dos moradores.</p>
+  </div>
+</div>
+
+<div id="modal7" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal7-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal7-title">Desafio no campo</h4>
+    <p>O campo enfrenta desafios como isolamento, falta de infraestrutura e dificuldades para acesso a serviços básicos, prejudicando o desenvolvimento rural.</p>
+  </div>
+</div>
+
+<div id="modal8" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal8-title" tabindex="-1">
+  <div class="modal-conteudo">
+    <button class="modal-close" aria-label="Fechar modal">&times;</button>
+    <h4 id="modal8-title">Desafio na cidade</h4>
+    <p>A cidade enfrenta desafios sociais e econômicos, como desigualdade, violência e falta de espaços públicos adequados para a população.</p>
+  </div>
+</div>
 
 <script>
-  // Dados do gráfico comparativo - campo x cidade
-  const ctx = document.getElementById('grafico').getContext('2d');
-  const grafico = new Chart(ctx, {
+  // Abrir modal ao clicar na imagem-botao
+  document.querySelectorAll('.imagem-botao').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const modalId = btn.getAttribute('data-modal');
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        modal.focus();
+      }
+    });
+    btn.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  });
+
+  // Fechar modal
+  document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.modal-bg').classList.remove('active');
+    });
+  });
+
+  // Fechar modal ao clicar fora do conteúdo
+  document.querySelectorAll('.modal-bg').forEach(bg => {
+    bg.addEventListener('click', e => {
+      if(e.target === bg) {
+        bg.classList.remove('active');
+      }
+    });
+  });
+
+  // Fechar modal com ESC
+  document.addEventListener('keydown', e => {
+    if(e.key === "Escape"){
+      document.querySelectorAll('.modal-bg.active').forEach(modal => {
+        modal.classList.remove('active');
+      });
+    }
+  });
+</script>
+
+<!-- PARTE 2 - Continuação do projeto -->
+
+<section id="resumo-cidade" class="section-content" style="background:#f5f0ff; padding:30px; color:#4b2c83;">
+  <h2>Resumo – Cidade</h2>
+  <p><strong>Pontos positivos:</strong> educação de qualidade, acesso a saúde, rica diversidade cultural e amplo mercado de trabalho.</p>
+  <p><strong>Como a cidade prejudica o campo:</strong> poluição do ar e da água, expansão urbana descontrolada que consome áreas rurais e impactos ambientais.</p>
+  <p><strong>O que a cidade pode fazer para melhorar:</strong> investir em transporte sustentável, reduzir desigualdades sociais e proteger áreas rurais próximas.</p>
+  <p><strong>Desafios urbanos:</strong> violência, desigualdade social, falta de espaços verdes e congestionamentos constantes.</p>
+</section>
+
+<section id="resumo-campo" class="section-content" style="background:#e6ffe6; padding:30px; color:#2d6b2d;">
+  <h2>Resumo – Campo</h2>
+  <p><strong>Pontos positivos:</strong> natureza preservada, produção agrícola, cultura tradicional e comunidade unida.</p>
+  <p><strong>O que o campo prejudica na cidade:</strong> desmatamento, queimadas, poluição dos recursos hídricos e perda da biodiversidade.</p>
+  <p><strong>O que pode melhorar:</strong> acesso à tecnologia, educação de qualidade e infraestrutura básica como saúde e transporte.</p>
+  <p><strong>Desafios enfrentados no campo:</strong> isolamento, baixa renda, falta de oportunidades e dificuldade de acesso a serviços públicos.</p>
+</section>
+
+<section id="grafico1" class="section-content" style="background:#fff0f5; padding:30px;">
+  <h2>Gráfico 1 – Dados do Projeto</h2>
+  <canvas id="grafico1Canvas" style="max-width:100%; height:350px;"></canvas>
+</section>
+
+<section id="mapa" class="section-content" style="padding:30px; background:#f0f7ff;">
+  <h2>Mapa – Localização do Campo e Cidade</h2>
+  <div style="width:100%;height:400px;">
+    <iframe
+      src="https://www.google.com/maps/d/embed?mid=1SAMPLEMAPID1234567890&hl=pt-BR"
+      width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <p style="font-size:14px; color:#555; margin-top:10px;">
+    Mapa interativo mostrando as regiões analisadas no projeto: áreas urbanas e rurais destacadas para facilitar a compreensão.
+  </p>
+</section>
+
+<section id="grafico3" class="section-content" style="background:#fff9e6; padding:30px;">
+  <h2>Gráfico 3 – Clima e Meio Ambiente</h2>
+  <canvas id="grafico3Canvas" style="max-width:100%; height:350px;"></canvas>
+</section>
+
+<section id="galeria" class="section-content" style="background:#f0f0f0; padding:30px;">
+  <h2>Galeria Interativa – Campo e Cidade</h2>
+  <div class="galeria-container" style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
+    <!-- Imagens do Campo -->
+    <button class="imagem-botao" data-modal="modal1" aria-describedby="modal1-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2I2ZDgyMiIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KICAgIDxjaXJjbGUgY3g9IjQ1IiBjeT0iNjAiIHI9IjI1IiBmaWxsPSIjZjdmZDdjIiAvPgogICAgPHJlY3QgeD0iNjUiIHk9IjY1IiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIGZpbGw9IiNmZjkwMDAiIC8+Cjwvc3ZnPg==" alt="Milharal" width="150" height="100" />
+    </button>
+    <button class="imagem-botao" data-modal="modal2" aria-describedby="modal2-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2M3ZjhlYSIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iNjUiIHI9IjI1IiBmaWxsPSIjZTlmZmEzIiAvPgo8L3N2Zz4=" alt="Campo com flores" width="150" height="100" />
+    </button>
+    <button class="imagem-botao" data-modal="modal3" aria-describedby="modal3-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2JiOWQ2MSIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KICAgIDxjaXJjbGUgY3g9IjYwIiBjeT0iNjUiIHI9IjI1IiBmaWxsPSIjZmY3M2QyIiAvPgo8L3N2Zz4=" alt="Homem trabalhando no campo" width="150" height="100" />
+    </button>
+
+    <!-- Imagens da Cidade -->
+    <button class="imagem-botao" data-modal="modal4" aria-describedby="modal4-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Q4ZTkxZCIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KICAgIDxjaXJjbGUgY3g9IjcwIiBjeT0iNjUiIHI9IjI1IiBmaWxsPSIjZDVkYmZmIiAvPgo8L3N2Zz4=" alt="Criança indo à escola" width="150" height="100" />
+    </button>
+    <button class="imagem-botao" data-modal="modal5" aria-describedby="modal5-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2I3YmI3ZSIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KICAgIDxjaXJjbGUgY3g9IjgwIiBjeT0iNjUiIHI9IjI1IiBmaWxsPSIjYjFiMWIxIiAvPgo8L3N2Zz4=" alt="Rua movimentada com pessoas" width="150" height="100" />
+    </button>
+    <button class="imagem-botao" data-modal="modal6" aria-describedby="modal6-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U0ZDZkZiIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KICAgIDxjaXJjbGUgY3g9Ijc1IiBjeT0iNjUiIHI9IjI1IiBmaWxsPSIjZjRmNGY0IiAvPgo8L3N2Zz4=" alt="Transporte público lotado" width="150" height="100" />
+    </button>
+
+    <!-- Imagens Comparativas -->
+    <button class="imagem-botao" data-modal="modal7" aria-describedby="modal7-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y0NjQ1NSIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KPC9zdmc+" alt="Desafio no campo" width="150" height="100" />
+    </button>
+    <button class="imagem-botao" data-modal="modal8" aria-describedby="modal8-title" style="border:none; background:none; cursor:pointer;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y2NDY0NiIgdmlld0JveD0iMCAwIDE1MCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICA8cmVjdCB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgLz4KPC9zdmc+" alt="Desafio na cidade" width="150" height="100" />
+    </button>
+  </div>
+</section>
+
+<!-- Modais para as imagens -->
+<div id="modal1" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal1-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal1-title" style="color:#4b2c83;">Milharal</h3>
+    <p>Milharal vasto que simboliza a força da agricultura no campo e a produção de alimentos essencial para o Brasil.</p>
+    <p><em>Curiosidade:</em> O milho é um dos principais alimentos cultivados no país, presente em diversas regiões e culturas.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal2" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal2-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal2-title" style="color:#2d6b2d;">Campo com flores</h3>
+    <p>Cenário encantador do campo com flores que representam a natureza preservada e a tranquilidade rural.</p>
+    <p><em>Curiosidade:</em> Muitas flores do campo possuem propriedades medicinais usadas tradicionalmente.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal3" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal3-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal3-title" style="color:#bb9d61;">Homem trabalhando no campo</h3>
+    <p>Retrato da rotina intensa e do esforço físico do trabalhador rural, enfrentando sol e chuva para produzir.</p>
+    <p><em>Curiosidade:</em> O trabalho rural é uma das bases da economia brasileira, garantindo alimentos e empregos.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal4" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal4-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal4-title" style="color:#d8e91d;">Criança indo à escola</h3>
+    <p>Imagem que representa a importância da educação para o futuro da cidade e de todo o país.</p>
+    <p><em>Curiosidade:</em> O acesso à educação é um dos maiores desafios para áreas urbanas e rurais.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal5" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal5-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal5-title" style="color:#b7bb7e;">Rua movimentada com pessoas</h3>
+    <p>Retrato da correria urbana, com suas ruas cheias e desafios diários para os moradores.</p>
+    <p><em>Curiosidade:</em> As grandes cidades concentram a maior parte da população brasileira, gerando intenso movimento.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal6" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal6-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal6-title" style="color:#f4f4f4;">Transporte público lotado</h3>
+    <p>Desafio constante dos moradores das cidades grandes, que enfrentam transporte público superlotado diariamente.</p>
+    <p><em>Curiosidade:</em> Melhorias no transporte público podem transformar a qualidade de vida urbana.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal7" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal7-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal7-title" style="color:#f46455;">Desafio no campo</h3>
+    <p>O campo enfrenta desafios como isolamento, falta de infraestrutura e dificuldades no acesso a serviços básicos.</p>
+    <p><em>Curiosidade:</em> Muitos jovens deixam o campo em busca de oportunidades nas cidades, aumentando o êxodo rural.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<div id="modal8" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal8-title" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;">
+  <div style="background:#fff; max-width:600px; width:90%; padding:20px; border-radius:8px; position:relative;">
+    <h3 id="modal8-title" style="color:#f64646;">Desafio na cidade</h3>
+    <p>Problemas urbanos como poluição, violência e desigualdade social afetam diretamente a qualidade de vida na cidade.</p>
+    <p><em>Curiosidade:</em> Investimentos em segurança pública e urbanismo são essenciais para melhorar a vida urbana.</p>
+    <button class="fechar-modal" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+  </div>
+</div>
+
+<section id="conclusao" class="section-content" style="background:#f7f0ff; padding:30px; color:#682e91;">
+  <h2>Conclusão</h2>
+  <p>Literalmente, entender as diferenças e desafios entre campo e cidade é fundamental para construir políticas que realmente façam a diferença. A luta pela igualdade, o respeito à cultura local e o incentivo à sustentabilidade são pontos que devem ser considerados especificamente por todos nós. Realmente, o futuro do Brasil depende da força e do equilíbrio entre esses dois mundos tão distintos, mas profundamente conectados.</p>
+</section>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Gráfico 1 - barras simples exemplo
+  const ctx1 = document.getElementById('grafico1Canvas').getContext('2d');
+  const grafico1 = new Chart(ctx1, {
     type: 'bar',
     data: {
-      labels: ['Economia', 'Infraestrutura', 'Trabalho', 'Sucessão', 'Agronegócio'],
-      datasets: [
-        {
-          label: 'Campo',
-          data: [75, 55, 70, 80, 85],
-          backgroundColor: 'rgba(59, 142, 94, 0.7)', // verde vibrante
-          borderColor: 'rgba(59, 142, 94, 1)',
-          borderWidth: 1,
-          borderRadius: 5,
-          maxBarThickness: 50,
-        },
-        {
-          label: 'Cidade',
-          data: [65, 80, 75, 45, 20],
-          backgroundColor: 'rgba(122, 77, 148, 0.7)', // roxo vibrante
-          borderColor: 'rgba(122, 77, 148, 1)',
-          borderWidth: 1,
-          borderRadius: 5,
-          maxBarThickness: 50,
-        },
-      ],
+      labels: ['Educação', 'Saúde', 'Infraestrutura', 'Trabalho'],
+      datasets: [{
+        label: 'Campo',
+        data: [60, 50, 40, 70],
+        backgroundColor: 'rgba(45, 107, 45, 0.7)'
+      }, {
+        label: 'Cidade',
+        data: [80, 75, 90, 85],
+        backgroundColor: 'rgba(75, 44, 131, 0.7)'
+      }]
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: { position: 'top' },
-        tooltip: { enabled: true },
-        title: {
-          display: false,
-          text: 'Comparativo: Campo x Cidade',
-        },
-      },
       scales: {
         y: {
           beginAtZero: true,
-          max: 100,
-          ticks: {
-            stepSize: 10,
-            callback: value => value + '%',
-          },
-          grid: {
-            color: '#eee',
-          },
-        },
-        x: {
-          grid: {
-            display: false,
-          },
-        },
-      },
-    },
+          max: 100
+        }
+      }
+    }
   });
+
+  // Gráfico 3 - Clima e Meio Ambiente (exemplo)
+  const ctx3 = document.getElementById('grafico3Canvas').getContext('2d');
+  const grafico3 = new Chart(ctx3, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Temperatura (°C)',
+        data: [28, 29, 30, 31, 30, 28, 27, 27, 26, 25, 24, 23],
+        borderColor: 'rgba(75, 44, 131, 1)',
+        backgroundColor: 'rgba(75, 44, 131, 0.3)',
+        fill: true,
+        tension: 0.3
+      }, {
+        label: 'Precipitação (mm)',
+        data: [120, 110, 100, 90, 85, 80, 70, 75, 95, 110, 130, 140],
+        borderColor: 'rgba(45, 107, 45, 1)',
+        backgroundColor: 'rgba(45, 107, 45, 0.3)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Abrir e fechar modais das imagens
+  document.querySelectorAll('.imagem-botao').forEach(button => {
+    button.addEventListener('click', () => {
+      const modalId = button.getAttribute('data-modal');
+      document.getElementById(modalId).style.display = 'flex';
+    });
+  });
+
+  document.querySelectorAll('.fechar-modal').forEach(button => {
+    button.addEventListener('click', () => {
+      button.closest('.modal').style.display = 'none';
+    });
+  });
+
+  // Fechar modal ao clicar fora do conteúdo
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', e => {
+      if(e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+</script>
+<!-- Rodapé -->
+<footer style="background:#682e91; color:#fff; text-align:center; padding:20px 10px; font-size:0.9rem;">
+  <p>Projeto Agrinho – Capacidade: Resistir e Florescer © 2025</p>
+  <p>Colégio Estadual Professora Edith</p>
+</footer>
+
+<!-- Scripts extras, caso queira futuramente -->
+<script>
+  // Aqui você pode colocar scripts adicionais que queira
+  // Por exemplo: scripts para melhorar acessibilidade ou interatividade
 </script>
 
 </body>

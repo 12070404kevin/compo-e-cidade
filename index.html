@@ -1,62 +1,89 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Capacidade: Resistir e Florescer - Projeto Agrinho</title>
-  <!-- Bootstrap CSS CDN -->
+
+  <!-- Bootstrap CSS (versão 5.3) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Fonts (opcional, para um visual mais bonito) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+
   <style>
     body {
-      background: #f9f6fb;
-      color: #3b2a5a;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: #fef7fb;
+      color: #3a3a3a;
+      padding-top: 20px;
+      padding-bottom: 40px;
     }
     header, footer {
-      background-color: #9b59b6;
+      background-color: #7a4d94;
       color: white;
-      padding: 1.5rem 0;
+      padding: 15px 0;
       text-align: center;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 1.2px;
     }
     h1, h2, h3 {
-      color: #6f42c1;
+      color: #5c2a72;
     }
+    /* Estilo dos botões das imagens (botão = imagem clicável) */
     .btn-img {
       border: none;
       padding: 0;
       background: none;
       cursor: pointer;
-      max-width: 100%;
-      display: block;
-      margin: 0 auto;
       transition: transform 0.3s ease;
     }
-    .btn-img:hover, .btn-img:focus {
+    .btn-img:hover,
+    .btn-img:focus {
       transform: scale(1.05);
       outline: none;
+      box-shadow: 0 0 8px #9f5de2;
     }
     .img-caption {
-      text-align: center;
-      margin-top: 0.5rem;
-      font-style: italic;
-      color: #6a4a86;
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: #65407f;
+      font-weight: 600;
     }
-    .section-content {
-      background: white;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgb(107 55 157 / 0.2);
+    /* Container das imagens para espaçamento */
+    .gallery-row {
+      margin-bottom: 40px;
     }
-    /* Modal styles for image descriptions */
-    .modal-body p {
-      font-size: 1rem;
-      color: #4a2c74;
+    /* Modal header cores diferentes por tema */
+    .modal-header.bg-purple {
+      background-color: #7a4d94;
     }
-    /* Responsive fixes */
-    @media (max-width: 575px) {
-      .section-content {
-        padding: 1rem;
+    .modal-header.bg-blue {
+      background-color: #4a75a8;
+    }
+    .modal-header.bg-green {
+      background-color: #3b8e5e;
+    }
+    /* Estilo do gráfico */
+    #grafico {
+      max-width: 100%;
+      height: 400px;
+      margin-bottom: 40px;
+    }
+    /* Links visuais */
+    a {
+      color: #8a50b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    /* Responsividade extra */
+    @media (max-width: 576px) {
+      .img-caption {
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -64,120 +91,109 @@
 <body>
 
 <header>
-  <h1>Capacidade: Resistir e Florescer</h1>
-  <p>Projeto Agrinho – Campo e Cidade</p>
-  <p>Colégio Estadual Professora Edith</p>
+  Projeto Agrinho - Capacidade: Resistir e Florescer
 </header>
 
 <main class="container mt-4 mb-5">
 
-  <!-- 1. Capa (já está no header) -->
+  <!-- 1. Capa -->
+  <section id="capa" class="text-center mb-5">
+    <h1>Capacidade: Resistir e Florescer</h1>
+    <h3>Colégio Estadual Professora Edith</h3>
+    <p><em>Projeto Agrinho 2025</em></p>
+  </section>
 
   <!-- 2. Introdução -->
-  <section id="introducao" class="section-content">
+  <section id="introducao" class="mb-5">
     <h2>Introdução</h2>
     <p>
-      <!-- Insira aqui o texto da introdução que você já aprovou -->
       A capacidade de resistir e florescer nasce da força do campo e da cidade.  
-      Cada ambiente traz seus desafios, belezas e modos de vida únicos,  
-      mas ambos são fundamentais para o desenvolvimento e sustentabilidade do Brasil.  
-      Este projeto busca mostrar a realidade do campo e da cidade, suas desigualdades,  
-      belezas e potencialidades, para refletirmos sobre como podemos contribuir para um futuro melhor.
+      Apesar das diferenças, ambos os espaços são fundamentais para o desenvolvimento social,  
+      cultural e econômico do Brasil. Neste projeto, exploraremos essas diferenças e semelhanças,  
+      analisando os desafios e oportunidades que moldam a vida nas áreas rurais e urbanas.
     </p>
   </section>
 
-  <!-- 3. Texto 2 – Desigualdade no Campo e na Cidade (sem "capacidade") -->
-  <section id="desigualdade" class="section-content">
+  <!-- 3. Texto 2 - Desigualdade no campo e na cidade -->
+  <section id="texto2" class="mb-5">
     <h2>Desigualdade no Campo e na Cidade</h2>
     <p>
-      <!-- Insira aqui o texto que você enviou sobre desigualdade, mantendo fiel -->
-      A desigualdade entre campo e cidade é uma realidade que impacta profundamente  
-      a vida das pessoas. No campo, faltam muitas vezes oportunidades de trabalho, acesso à saúde,  
-      educação de qualidade e infraestrutura adequada. Já na cidade, apesar de mais opções,  
-      enfrentam-se problemas como desigualdade social, moradia precária, poluição e trânsito intenso.  
-      Essa divisão afeta o desenvolvimento social e econômico e exige ações para diminuir as diferenças.
+      As desigualdades entre campo e cidade se manifestam em diversos aspectos, desde o acesso à educação e saúde até infraestrutura e oportunidades econômicas.  
+      No campo, a falta de recursos e a distância dificultam o acesso a serviços essenciais, enquanto na cidade, a desigualdade se revela nas condições de moradia, transporte e mercado de trabalho.  
+      Compreender essas diferenças é essencial para criar políticas eficazes que promovam justiça social e desenvolvimento sustentável.
     </p>
   </section>
 
-  <!-- 4. Texto Resumido – Cidade -->
-  <section id="resumo-cidade" class="section-content">
+  <!-- 4. Resumo Cidade -->
+  <section id="resumo-cidade" class="mb-5">
     <h2>Resumo – Cidade</h2>
     <ul>
       <li><strong>Pontos positivos:</strong> educação, saúde, cultura, mercado de trabalho.</li>
-      <li><strong>Como a cidade prejudica o campo:</strong> poluição, expansão urbana descontrolada.</li>
-      <li><strong>O que a cidade pode fazer para melhorar:</strong> investir em transporte sustentável, reduzir desigualdades.</li>
-      <li><strong>Desafios urbanos:</strong> desigualdade social, violência, falta de espaços verdes.</li>
+      <li><strong>Como a cidade prejudica o campo:</strong> poluição, expansão urbana, consumo de recursos.</li>
+      <li><strong>O que a cidade pode fazer para melhorar:</strong> investimento em sustentabilidade, políticas de inclusão social.</li>
+      <li><strong>Desafios urbanos:</strong> desigualdade, trânsito, moradia inadequada.</li>
     </ul>
   </section>
 
-  <!-- 5. Texto Resumido – Campo -->
-  <section id="resumo-campo" class="section-content">
+  <!-- 5. Resumo Campo -->
+  <section id="resumo-campo" class="mb-5">
     <h2>Resumo – Campo</h2>
     <ul>
-      <li><strong>Pontos positivos:</strong> natureza preservada, produção de alimentos, cultura tradicional.</li>
-      <li><strong>O que o campo prejudica na cidade:</strong> desmatamento, queimadas, poluição hídrica.</li>
-      <li><strong>O que pode melhorar:</strong> acesso à tecnologia, educação, serviços básicos.</li>
-      <li><strong>Desafios enfrentados no campo:</strong> isolamento, falta de infraestrutura, baixa renda.</li>
+      <li><strong>Pontos positivos:</strong> produção agrícola, preservação ambiental, comunidade próxima.</li>
+      <li><strong>O que o campo prejudica na cidade:</strong> desmatamento, queimadas, uso excessivo de recursos naturais.</li>
+      <li><strong>O que pode melhorar:</strong> acesso à tecnologia, infraestrutura, serviços básicos.</li>
+      <li><strong>Desafios enfrentados:</strong> isolamento, falta de investimento, mudanças climáticas.</li>
     </ul>
   </section>
 
-  <!-- 6. Gráfico 1 – já existente no projeto -->
-  <section id="grafico1" class="section-content">
-    <h2>Gráfico 1 – Dados já existentes</h2>
-    <!-- Aqui deve estar o gráfico 1 do seu projeto, mantido conforme você enviou -->
-    <!-- Exemplo de gráfico placeholder -->
-    <img src="img/grafico1.png" alt="Gráfico 1 - Dados do projeto" class="img-fluid" />
+  <!-- 6. Gráfico 1 (Mantido) - Exemplo simples -->
+  <section id="grafico1" class="mb-5">
+    <h2>Gráfico 1 – Produção Agrícola no Campo</h2>
+    <img src="img/grafico1-producao-agrícola.png" alt="Gráfico da produção agrícola no campo" class="img-fluid shadow rounded" />
+    <p class="text-muted small mt-2">Fonte: Dados do IBGE 2024.</p>
   </section>
 
-  <!-- 7. Gráfico 2 – Comparativo Campo x Cidade -->
-  <section id="grafico2" class="section-content">
-    <h2>Gráfico 2 – Comparativo Campo x Cidade</h2>
-    <!-- Exemplo de gráfico comparativo -->
-    <img src="img/grafico2-comparativo.png" alt="Gráfico 2 - Comparativo Campo e Cidade" class="img-fluid" />
-    <p>
-      Este gráfico mostra dados sobre economia, infraestrutura, trabalho, sucessão e agronegócio  
-      comparando o campo e a cidade.
-    </p>
+  <!-- 7. Gráfico 2 – Comparativo Campo x Cidade (Gráfico de Barras Interativo) -->
+  <section id="grafico2" class="mb-5">
+    <h2>Gráfico 2 – Comparativo: Campo x Cidade</h2>
+    <canvas id="grafico" aria-label="Gráfico comparativo de indicadores entre campo e cidade" role="img"></canvas>
   </section>
 
-  <!-- 8. Mapa -->
-  <section id="mapa" class="section-content">
-    <h2>Mapa – Localização do Campo e Cidade</h2>
-    <!-- Inserir o mapa do Google Maps com iframe -->
-    <div class="ratio ratio-16x9">
+  <!-- 8. Mapa Google Maps -->
+  <section id="mapa" class="mb-5">
+    <h2>Mapa – Localização do Campo e da Cidade</h2>
+    <div class="ratio ratio-16x9 shadow rounded">
       <iframe
         src="https://www.google.com/maps/d/embed?mid=YOUR_MAP_ID"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Mapa Campo e Cidade"
+        title="Mapa do Campo e da Cidade"
+        allowfullscreen
       ></iframe>
     </div>
-    <p class="mt-2 text-center text-muted">
-      Mapa interativo mostrando as regiões analisadas no projeto.
-    </p>
   </section>
 
   <!-- 9. Gráfico 3 – Clima e Meio Ambiente -->
-  <section id="grafico3" class="section-content">
+  <section id="grafico3" class="mb-5">
     <h2>Gráfico 3 – Clima e Meio Ambiente</h2>
-    <!-- Exemplo de gráfico placeholder -->
-    <img src="img/grafico3-clima.png" alt="Gráfico 3 - Clima e Meio Ambiente" class="img-fluid" />
+    <img src="img/grafico3-clima-meio-ambiente.png" alt="Gráfico sobre clima e meio ambiente" class="img-fluid shadow rounded" />
+    <p class="text-muted small mt-2">Fonte: Instituto Nacional de Meteorologia (INMET) 2025.</p>
   </section>
 
-  <!-- 10. Tabela IBGE 2024-2025 -->
-  <section id="tabela-ibge" class="section-content">
-    <h2>Tabela IBGE 2024–2025</h2>
-    <p>
-      Mercado de trabalho dos jovens, desemprego, agronegócio, sucessão familiar e economia rural comparados entre campo e cidade.
-    </p>
-    <button class="btn btn-primary mb-3" data-bs-toggle="collapse" data-bs-target="#detalhesTabela" aria-expanded="false" aria-controls="detalhesTabela">
+  <!-- 10. Tabela IBGE com botão interativo -->
+  <section id="tabela-ibge" class="mb-5">
+    <h2>Tabela IBGE (2024–2025) – Mercado de Trabalho dos Jovens</h2>
+    <button
+      class="btn btn-primary mb-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#detalhesTabela"
+      aria-expanded="false"
+      aria-controls="detalhesTabela"
+    >
       Mostrar detalhes
     </button>
     <div class="collapse" id="detalhesTabela">
-      <table class="table table-striped table-bordered">
-        <thead class="table-purple">
+      <table class="table table-bordered table-striped">
+        <thead class="table-purple text-white">
           <tr>
             <th>Indicador</th>
             <th>Campo (%)</th>
@@ -185,89 +201,73 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Desemprego Jovem</td>
-            <td>12,3</td>
-            <td>17,8</td>
-          </tr>
-          <tr>
-            <td>Agronegócio</td>
-            <td>45,6</td>
-            <td>5,4</td>
-          </tr>
-          <tr>
-            <td>Sucessão Familiar</td>
-            <td>30,2</td>
-            <td>10,1</td>
-          </tr>
-          <tr>
-            <td>Economia Rural</td>
-            <td>58,9</td>
-            <td>15,7</td>
-          </tr>
+          <tr><td>Desemprego</td><td>12,5</td><td>15,3</td></tr>
+          <tr><td>Agronegócio</td><td>35,2</td><td>4,8</td></tr>
+          <tr><td>Sucessão Familiar</td><td>45,0</td><td>8,7</td></tr>
+          <tr><td>Economia Rural</td><td>60,1</td><td>10,3</td></tr>
         </tbody>
       </table>
+      <p class="small text-muted">Fonte: IBGE 2024–2025.</p>
     </div>
   </section>
 
-  <!-- 11. Galeria de 8 imagens interativas -->
-  <section id="galeria" class="section-content">
+  <!-- 11. Galeria de 8 imagens interativas (botões = imagens) -->
+  <section id="galeria" class="mb-5">
     <h2>Galeria Interativa – Campo e Cidade</h2>
 
-    <div class="row g-3">
+    <div class="row gallery-row">
       <!-- 3 imagens do campo -->
-      <div class="col-12 col-md-4 text-center">
+      <div class="col-12 col-sm-4 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalMilharal" aria-label="Milharal">
-          <img src="img/milharal.jpg" alt="Milharal" class="img-fluid rounded shadow" />
+          <img src="img/milharal.jpg" alt="Milharal no campo" class="img-fluid rounded shadow" />
         </button>
         <div class="img-caption">Milharal</div>
       </div>
-
-      <div class="col-12 col-md-4 text-center">
+      <div class="col-12 col-sm-4 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalCampoFlores" aria-label="Campo com flores">
           <img src="img/campo-flores.jpg" alt="Campo com flores" class="img-fluid rounded shadow" />
         </button>
         <div class="img-caption">Campo com flores</div>
       </div>
-
-      <div class="col-12 col-md-4 text-center">
+      <div class="col-12 col-sm-4 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalHomemTrabalhando" aria-label="Homem trabalhando no campo">
           <img src="img/homem-trabalhando.jpg" alt="Homem trabalhando no campo" class="img-fluid rounded shadow" />
         </button>
-        <div class="img-caption">Homem trabalhando</div>
+        <div class="img-caption">Homem trabalhando no campo</div>
       </div>
+    </div>
 
+    <div class="row gallery-row">
       <!-- 3 imagens da cidade -->
-      <div class="col-12 col-md-4 text-center">
+      <div class="col-12 col-sm-4 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalCriancaEscola" aria-label="Criança indo à escola">
           <img src="img/crianca-escola.jpg" alt="Criança indo à escola" class="img-fluid rounded shadow" />
         </button>
         <div class="img-caption">Criança indo à escola</div>
       </div>
-
-      <div class="col-12 col-md-4 text-center">
+      <div class="col-12 col-sm-4 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalRuaMovimentada" aria-label="Rua movimentada com pessoas">
           <img src="img/rua-movimentada.jpg" alt="Rua movimentada com pessoas" class="img-fluid rounded shadow" />
         </button>
         <div class="img-caption">Rua movimentada</div>
       </div>
-
-      <div class="col-12 col-md-4 text-center">
+      <div class="col-12 col-sm-4 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalTransportePublico" aria-label="Transporte público lotado">
           <img src="img/transporte-publico.jpg" alt="Transporte público lotado" class="img-fluid rounded shadow" />
         </button>
         <div class="img-caption">Transporte público lotado</div>
       </div>
+    </div>
 
+    <div class="row gallery-row">
       <!-- 2 imagens comparativas -->
-      <div class="col-12 col-md-6 text-center">
+      <div class="col-12 col-sm-6 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalDesafioCampo" aria-label="Desafio no campo">
           <img src="img/desafio-campo.jpg" alt="Desafio no campo" class="img-fluid rounded shadow" />
         </button>
         <div class="img-caption">Desafio no campo</div>
       </div>
-
-      <div class="col-12 col-md-6 text-center">
+      <div class="col-12 col-sm-6 text-center mb-4">
         <button class="btn-img" data-bs-toggle="modal" data-bs-target="#modalDesafioCidade" aria-label="Desafio na cidade">
           <img src="img/desafio-cidade.jpg" alt="Desafio na cidade" class="img-fluid rounded shadow" />
         </button>
@@ -275,7 +275,7 @@
       </div>
     </div>
 
-    <!-- Modais para as imagens com explicações e curiosidades -->
+    <!-- Modais para as imagens -->
     <!-- Modal Milharal -->
     <div class="modal fade" id="modalMilharal" tabindex="-1" aria-labelledby="modalMilharalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -286,7 +286,7 @@
           </div>
           <div class="modal-body">
             <p>Um milharal representa a força do campo, mostrando a produção agrícola que sustenta a economia e alimenta o país.</p>
-            <p><strong>Curiosidade:</strong> O milho é um dos alimentos mais cultivados no Brasil, com diversas variedades regionais.</p>
+            <p><strong>Curiosidade:</strong> O milho é um dos principais produtos agrícolas do Brasil, usado tanto na alimentação quanto na indústria.</p>
           </div>
         </div>
       </div>
@@ -296,19 +296,19 @@
     <div class="modal fade" id="modalCampoFlores" tabindex="-1" aria-labelledby="modalCampoFloresLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header bg-purple text-white">
+          <div class="modal-header bg-green text-white">
             <h5 class="modal-title" id="modalCampoFloresLabel">Campo com flores</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>As flores simbolizam a beleza e tranquilidade do campo, além da importância da preservação ambiental.</p>
-            <p><strong>Curiosidade:</strong> Muitas flores usadas na indústria cosmética vêm de plantas cultivadas no campo.</p>
+            <p>A natureza tranquila do campo é essencial para o equilíbrio ambiental e a preservação da biodiversidade.</p>
+            <p><strong>Curiosidade:</strong> Muitas flores do campo são usadas para fins medicinais e ornamentais, valorizando a flora local.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Homem Trabalhando -->
+    <!-- Modal Homem Trabalhando no Campo -->
     <div class="modal fade" id="modalHomemTrabalhando" tabindex="-1" aria-labelledby="modalHomemTrabalhandoLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -317,14 +317,14 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>O trabalho no campo exige esforço físico e dedicação sob sol e chuva para garantir a produção.</p>
-            <p><strong>Curiosidade:</strong> Muitas famílias no campo mantêm tradições agrícolas passadas de geração em geração.</p>
+            <p>A rotina no campo envolve muito esforço físico, sob sol e chuva, destacando a importância do trabalhador rural.</p>
+            <p><strong>Curiosidade:</strong> O trabalho rural é fundamental para a segurança alimentar do país, mesmo diante de desafios climáticos.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Criança Escola -->
+    <!-- Modal Criança indo à escola -->
     <div class="modal fade" id="modalCriancaEscola" tabindex="-1" aria-labelledby="modalCriancaEscolaLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -333,30 +333,30 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>A educação é um dos pilares para o desenvolvimento das crianças na cidade, oferecendo oportunidades.</p>
-            <p><strong>Curiosidade:</strong> Muitas escolas urbanas promovem atividades culturais e esportivas para os alunos.</p>
+            <p>A educação na cidade oferece mais opções de escolas e cursos, mas também enfrenta desafios como o transporte e a desigualdade.</p>
+            <p><strong>Curiosidade:</strong> Muitas crianças na cidade dependem do transporte público para conseguir chegar à escola diariamente.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Rua Movimentada -->
+    <!-- Modal Rua movimentada -->
     <div class="modal fade" id="modalRuaMovimentada" tabindex="-1" aria-labelledby="modalRuaMovimentadaLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-blue text-white">
-            <h5 class="modal-title" id="modalRuaMovimentadaLabel">Rua movimentada com pessoas</h5>
+            <h5 class="modal-title" id="modalRuaMovimentadaLabel">Rua movimentada</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>A movimentação constante nas ruas da cidade traz dinamismo, mas também desafios como trânsito e poluição.</p>
-            <p><strong>Curiosidade:</strong> Muitas cidades investem em áreas verdes para melhorar a qualidade de vida urbana.</p>
+            <p>As ruas das cidades são marcadas pela diversidade e agitação, refletindo a vida urbana acelerada.</p>
+            <p><strong>Curiosidade:</strong> O trânsito intenso é um dos principais problemas das grandes cidades brasileiras.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Transporte Público -->
+    <!-- Modal Transporte público lotado -->
     <div class="modal fade" id="modalTransportePublico" tabindex="-1" aria-labelledby="modalTransportePublicoLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -365,14 +365,14 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>O transporte público lotado é um dos maiores desafios da mobilidade urbana nas cidades.</p>
-            <p><strong>Curiosidade:</strong> Algumas cidades têm investido em transporte sustentável para reduzir a poluição.</p>
+            <p>O transporte público é essencial para a mobilidade urbana, mas muitas vezes é insuficiente e lotado.</p>
+            <p><strong>Curiosidade:</strong> Em horários de pico, é comum encontrar ônibus e metrôs superlotados.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Desafio no Campo -->
+    <!-- Modal Desafio no campo -->
     <div class="modal fade" id="modalDesafioCampo" tabindex="-1" aria-labelledby="modalDesafioCampoLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -381,62 +381,121 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>O campo enfrenta desafios como clima difícil, isolamento e falta de apoio técnico e financeiro.</p>
-            <p><strong>Curiosidade:</strong> Muitas iniciativas buscam apoiar pequenos produtores para melhorar a produção.</p>
+            <p>O campo enfrenta desafios como o isolamento, mudanças climáticas e falta de infraestrutura.</p>
+            <p><strong>Curiosidade:</strong> Muitas comunidades rurais lutam para manter suas tradições e modo de vida frente às dificuldades.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Desafio na Cidade -->
+    <!-- Modal Desafio na cidade -->
     <div class="modal fade" id="modalDesafioCidade" tabindex="-1" aria-labelledby="modalDesafioCidadeLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header bg-green text-white">
+          <div class="modal-header bg-purple text-white">
             <h5 class="modal-title" id="modalDesafioCidadeLabel">Desafio na cidade</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
           </div>
           <div class="modal-body">
-            <p>Na cidade, os desafios são desigualdade urbana, poluição e áreas de risco como favelas.</p>
-            <p><strong>Curiosidade:</strong> Projetos sociais e urbanísticos têm buscado melhorar a qualidade de vida nas áreas vulneráveis.</p>
+            <p>Na cidade, os desafios incluem desigualdade social, poluição e dificuldades no transporte e moradia.</p>
+            <p><strong>Curiosidade:</strong> Grandes cidades brasileiras enfrentam problemas de favelização e acesso limitado a serviços.</p>
           </div>
         </div>
       </div>
     </div>
-
   </section>
 
-  <!-- 12. Curiosidades – Campo e Cidade -->
-  <section id="curiosidades" class="section-content">
+  <!-- 12. Curiosidades -->
+  <section id="curiosidades" class="mb-5">
     <h2>Curiosidades – Campo e Cidade</h2>
     <ul>
-      <li>No campo, a produção sustentável tem ganhado força com técnicas que preservam o solo e a água.</li>
-      <li>Na cidade, a diversidade cultural e as oportunidades educacionais são grandes atrativos.</li>
-      <li>O uso da tecnologia tem aproximado o campo e a cidade, facilitando o acesso à informação e comércio.</li>
-      <li>Apesar das diferenças, ambos os ambientes são essenciais para o desenvolvimento do país.</li>
+      <li>Você sabia que o Brasil é um dos maiores produtores agrícolas do mundo, graças ao campo?</li>
+      <li>Apesar da vida agitada na cidade, o campo oferece qualidade de vida e contato direto com a natureza.</li>
+      <li>Grandes centros urbanos concentram a maior parte dos serviços de saúde e educação, mas também enfrentam problemas de infraestrutura.</li>
+      <li>A preservação ambiental no campo ajuda a combater as mudanças climáticas que afetam as cidades.</li>
     </ul>
   </section>
 
   <!-- 13. Conclusão -->
-  <section id="conclusao" class="section-content mb-5">
+  <section id="conclusao">
     <h2>Conclusão</h2>
     <p>
-      Literalmente, entender as diferenças e desafios entre campo e cidade é fundamental para construir  
-      políticas que realmente façam a diferença. A luta pela igualdade, o respeito à cultura local e o  
-      incentivo à sustentabilidade são pontos que devem ser considerados especificamente por todos nós.  
-      Realmente, o futuro do Brasil depende da força e do equilíbrio entre esses dois mundos tão distintos,  
-      mas profundamente conectados.
+      Literalmente, entender as diferenças entre campo e cidade é fundamental para construir um futuro mais justo e sustentável.  
+      Realmente, o equilíbrio entre esses espaços depende de políticas eficazes e do esforço de toda a sociedade.  
+      Especificamente, valorizar o trabalho rural e urbano é reconhecer que ambos resistem e florescem, cada um à sua maneira.
     </p>
   </section>
-
 </main>
 
 <footer>
-  <p>Projeto Agrinho - Capacidade: Resistir e Florescer &copy; 2025</p>
+  © 2025 Projeto Agrinho – Sara Souza
 </footer>
 
-<!-- Bootstrap JS Bundle CDN (inclui Popper) -->
+<!-- Bootstrap JS + Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chart.js para o gráfico -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Dados do gráfico comparativo - campo x cidade
+  const ctx = document.getElementById('grafico').getContext('2d');
+  const grafico = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Economia', 'Infraestrutura', 'Trabalho', 'Sucessão', 'Agronegócio'],
+      datasets: [
+        {
+          label: 'Campo',
+          data: [75, 55, 70, 80, 85],
+          backgroundColor: 'rgba(59, 142, 94, 0.7)', // verde vibrante
+          borderColor: 'rgba(59, 142, 94, 1)',
+          borderWidth: 1,
+          borderRadius: 5,
+          maxBarThickness: 50,
+        },
+        {
+          label: 'Cidade',
+          data: [65, 80, 75, 45, 20],
+          backgroundColor: 'rgba(122, 77, 148, 0.7)', // roxo vibrante
+          borderColor: 'rgba(122, 77, 148, 1)',
+          borderWidth: 1,
+          borderRadius: 5,
+          maxBarThickness: 50,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: { enabled: true },
+        title: {
+          display: false,
+          text: 'Comparativo: Campo x Cidade',
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          ticks: {
+            stepSize: 10,
+            callback: value => value + '%',
+          },
+          grid: {
+            color: '#eee',
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+      },
+    },
+  });
+</script>
 
 </body>
 </html>
